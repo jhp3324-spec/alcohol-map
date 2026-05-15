@@ -170,6 +170,130 @@
       font-weight: 700;
       margin-left: 6px;
     }
+
+    /* 검색 */
+    .search-bar {
+      padding: 8px 20px;
+      background: #16213e;
+      border-bottom: 1px solid #2a2a4a;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      max-width: 400px;
+    }
+
+    .search-input-wrap input {
+      width: 100%;
+      padding: 9px 36px 9px 36px;
+      background: #0f0f23;
+      border: 1.5px solid #444;
+      border-radius: 24px;
+      color: #eee;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input-wrap input:focus { border-color: #f4a261; }
+    .search-input-wrap input::placeholder { color: #666; }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+      pointer-events: none;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 16px;
+      cursor: pointer;
+      display: none;
+      line-height: 1;
+    }
+
+    /* 검색 결과 드롭다운 */
+    .search-results {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      width: 100%;
+      max-width: 400px;
+      background: #1e1e3a;
+      border: 1px solid #f4a261;
+      border-radius: 12px;
+      max-height: 280px;
+      overflow-y: auto;
+      z-index: 2000;
+      display: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid #2a2a4a;
+      transition: background 0.15s;
+    }
+
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover { background: #2a2a4a; }
+
+    .result-emoji { font-size: 22px; flex-shrink: 0; }
+
+    .result-info { flex: 1; min-width: 0; }
+
+    .result-name {
+      font-size: 14px;
+      color: #eee;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .result-name mark {
+      background: none;
+      color: #f4a261;
+      font-weight: 700;
+    }
+
+    .result-meta {
+      font-size: 11px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .result-type-badge {
+      font-size: 10px;
+      background: #333;
+      color: #ccc;
+      padding: 2px 7px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .no-result {
+      padding: 18px;
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
@@ -178,6 +302,15 @@
   <h1>🍷 세계 <span>술 원산지</span> 지도</h1>
   <div style="font-size:12px;color:#888;">마커 클릭 시 상세 정보</div>
 </header>
+
+<div class="search-bar">
+  <div class="search-input-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="술 이름, 나라, 종류로 검색...">
+    <button class="search-clear" id="search-clear">✕</button>
+    <div class="search-results" id="search-results"></div>
+  </div>
+</div>
 
 <div class="filter-bar">
   <button class="filter-btn active" data-type="all">전체 <span class="count-badge" id="cnt-all">0</span></button>
@@ -330,7 +463,93 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderMarkers(btn.dataset.type);
+    // 검색 초기화
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-results').style.display = 'none';
+    document.getElementById('search-clear').style.display = 'none';
   });
+});
+
+// 검색 기능
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+const searchClear = document.getElementById('search-clear');
+
+function highlight(text, query) {
+  if (!query) return text;
+  const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+function flyToMarker(d) {
+  // 해당 마커 찾아서 팝업 열기
+  markers.forEach(m => {
+    const ll = m.getLatLng();
+    if (Math.abs(ll.lat - d.lat) < 0.01 && Math.abs(ll.lng - d.lng) < 0.01) {
+      map.flyTo([d.lat, d.lng], 5, { duration: 1 });
+      setTimeout(() => m.openPopup(), 1000);
+    }
+  });
+}
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim();
+  searchClear.style.display = q ? 'block' : 'none';
+
+  if (!q) {
+    searchResults.style.display = 'none';
+    return;
+  }
+
+  const matched = drinks.filter(d =>
+    d.name.includes(q) || d.country.includes(q) ||
+    d.type.includes(q) || d.style.includes(q) || d.desc.includes(q)
+  );
+
+  if (matched.length === 0) {
+    searchResults.innerHTML = `<div class="no-result">검색 결과가 없습니다</div>`;
+  } else {
+    searchResults.innerHTML = matched.map(d => `
+      <div class="search-result-item" data-lat="${d.lat}" data-lng="${d.lng}" data-name="${d.name}">
+        <div class="result-emoji">${d.emoji}</div>
+        <div class="result-info">
+          <div class="result-name">${highlight(d.name, q)}</div>
+          <div class="result-meta">📍 ${d.country} · 도수 ${d.abv}</div>
+        </div>
+        <div class="result-type-badge">${d.type}</div>
+      </div>
+    `).join('');
+
+    searchResults.querySelectorAll('.search-result-item').forEach((el, i) => {
+      el.addEventListener('click', () => {
+        const d = matched[i];
+        searchInput.value = d.name;
+        searchResults.style.display = 'none';
+
+        // 전체 마커 표시 후 해당 마커로 이동
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-type="all"]').classList.add('active');
+        renderMarkers('all');
+        setTimeout(() => flyToMarker(d), 100);
+      });
+    });
+  }
+
+  searchResults.style.display = 'block';
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchResults.style.display = 'none';
+  searchClear.style.display = 'none';
+  searchInput.focus();
+});
+
+// 바깥 클릭 시 결과 닫기
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-input-wrap')) {
+    searchResults.style.display = 'none';
+  }
 });
 </script>
 
