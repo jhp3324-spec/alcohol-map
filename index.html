@@ -343,6 +343,7 @@
   <button class="filter-btn" data-type="와인">🍷 와인</button>
   <button class="filter-btn" data-type="위스키">🥃 위스키</button>
   <button class="filter-btn" data-type="소주·청주">🍶 소주·청주</button>
+  <button class="filter-btn" data-type="중국술">🇨🇳 중국술</button>
   <button class="filter-btn" data-type="증류주">🥂 증류주</button>
   <button class="filter-btn" data-type="전통주">🏺 전통주</button>
 </div>
@@ -370,6 +371,7 @@
   <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>와인 원산지</div>
   <div class="legend-item"><div class="legend-dot" style="background:#92400e"></div>위스키 원산지</div>
   <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>소주·청주</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#e11d48"></div>중국술</div>
   <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>증류주</div>
   <div class="legend-item"><div class="legend-dot" style="background:#059669"></div>전통주</div>
 </div>
@@ -427,6 +429,19 @@ const origins = [
   { name:"안동소주", country:"대한민국 (안동)", lat:36.57, lng:128.73, type:"소주·청주", emoji:"🍶", abv:"45%", desc:"증류식 전통 소주. 고려시대부터 이어온 명주.", style:"증류식 소주", color:"#3b82f6" },
   { name:"사케 (청주)", country:"일본 (니가타)", lat:37.90, lng:139.02, type:"소주·청주", emoji:"🍶", abv:"15~16%", desc:"쌀과 누룩으로 빚은 일본 전통주.", style:"순미다이긴죠", color:"#3b82f6" },
   { name:"마오타이 (茅台)", country:"중국 (구이저우)", lat:27.86, lng:106.37, type:"소주·청주", emoji:"🍶", abv:"53%", desc:"중국 국주(國酒). 수수로 만든 장향형 백주.", style:"바이주", color:"#3b82f6" },
+  // 중국 술 원산지 — 출처: 위키백과
+  { name:"바이주 — 장향형 (酱香型)", country:"중국 (구이저우성 마오타이진)", lat:27.90, lng:106.38, type:"중국술", emoji:"🍶",
+    style:"장향형 바이주", abv:"53%", wiki:"https://en.wikipedia.org/wiki/Baijiu",
+    desc:"발효된 콩·간장과 비슷한 향. 수수(고량)와 밀 누룩 원료. 대표 브랜드: 마오타이(茅台). 2018년 전 세계 바이주 판매량 108억 리터(위스키·보드카·진·럼·테킬라 합계보다 많음). 명나라(1368~1644년) 때 현재 형태로 발전.", color:"#e11d48" },
+  { name:"바이주 — 농향형 (浓香型)", country:"중국 (쓰촨성 이빈)", lat:28.77, lng:104.64, type:"중국술", emoji:"🍶",
+    style:"농향형 바이주", abv:"52%", wiki:"https://en.wikipedia.org/wiki/Baijiu",
+    desc:"달콤하고 부드러운 향. 파인애플·바나나·아니스 향. 수수·쌀·찹쌀·밀·옥수수 5가지 곡물 원료. 진흙 웅덩이에서 장기 발효. 우량예(五粮液)·루저우라오쟈오(泸州老窖) 대표. 매출 기준 중국 2위 주류 기업.", color:"#e11d48" },
+  { name:"바이주 — 청향형 (清香型)", country:"중국 (산시성 펀양)", lat:37.27, lng:111.78, type:"중국술", emoji:"🍶",
+    style:"청향형 바이주", abv:"48%", wiki:"https://en.wikipedia.org/wiki/Baijiu",
+    desc:"가볍고 드라이하며 꽃향·건조과일 향. 수수 단일 원료. 돌항아리(陶缸)에서 발효. 대표 브랜드: 펀주(汾酒)·얼궈터우(二锅头). 북방 지역에서 특히 인기. 가장 오래된 바이주 향형 중 하나.", color:"#e11d48" },
+  { name:"황주 (黄酒·소흥주)", country:"중국 (저장성 사오싱)", lat:30.00, lng:120.58, type:"중국술", emoji:"🍶",
+    style:"황주 (발효주)", abv:"8~20%", wiki:"https://en.wikipedia.org/wiki/Huangjiu",
+    desc:"중국에서 가장 오래된 술 중 하나. 쌀·찹쌀·밀 원료로 발효(증류 아님). 연한 황색~갈색. 따뜻하게 데워 마시는 전통. 여름엔 차갑게도 음용. 사오싱주(紹興酒)가 대표. 당도에 따라 드라이~엑스트라스위트 분류. 요리재료로도 활용.", color:"#e11d48" },
   { name:"보드카", country:"러시아 (모스크바)", lat:55.75, lng:37.62, type:"증류주", emoji:"🥂", abv:"40%", desc:"감자·밀·호밀 원료. 무색무취의 증류주.", style:"보드카", color:"#7c3aed" },
   { name:"진", country:"영국 (런던)", lat:51.51, lng:-0.13, type:"증류주", emoji:"🥂", abv:"40~47%", desc:"주니퍼베리 향의 증류주. 칵테일 기본 베이스.", style:"런던 드라이 진", color:"#7c3aed" },
   { name:"럼", country:"쿠바 (하바나)", lat:23.13, lng:-82.38, type:"증류주", emoji:"🥂", abv:"40~75%", desc:"사탕수수 당밀로 만든 카리브해 증류주.", style:"다크럼", color:"#7c3aed" },
@@ -543,6 +558,76 @@ const brands = [
     founded:"1864년", founder:"표트르 아르세네비치 스미르노프", parent:"Diageo", flagship:"Smirnoff No.21",
     abv:"37.5%", desc:"세계 판매량 1위 보드카. 러시아 황실 납품 브랜드. 혁명 후 서방으로 이전. 칵테일 기본 베이스.", color:"#a855f7" },
 
+  // 중국 술 브랜드 — 출처: 위키백과
+  { name:"마오타이 (贵州茅台)", country:"중국 (구이저우성 마오타이진)", lat:27.855, lng:106.365, category:"바이주·장향형", emoji:"🍶",
+    founded:"1951년 (역사는 1704년)", founder:"중국 국가 (3개 증류소 합병)", parent:"China Kweichow Moutai Co., Ltd. (국영)", flagship:"飞天茅台 (페이톈 마오타이) 53%",
+    abv:"38~53%",
+    awards:"• 1915년 파나마-태평양 박람회 금메달\n• 중국 외교 공식 만찬주 (마오쩌둥·덩샤오핑 시대부터)\n• 세계에서 가장 가치 높은 주류 브랜드 중 하나",
+    desc:"중국 국주(國酒). 구이저우성 마오타이진에서만 생산. 수수(고량)와 밀 누룩, 츠수이강 물로 제조. 장향형(酱香型) 대표. 9번 찌기·8번 발효·7번 증류의 복잡한 공정. 최소 5년 숙성. 외교 석상 필수품으로 '외교주'라 불림. 시진핑 국빈 만찬에도 등장.",
+    wiki:"https://en.wikipedia.org/wiki/Moutai",
+    products:[
+      { name:"飞天茅台 53%", abv:"53%", desc:"가장 유명한 제품. 붉은 상자·흰 병이 상징." },
+      { name:"茅台王子酒", abv:"53%", desc:"중급 라인. 접근하기 쉬운 가격." },
+      { name:"茅台迎宾酒", abv:"53%", desc:"연회용 라인." },
+    ],
+    color:"#a855f7" },
+  { name:"우량예 (五粮液)", country:"중국 (쓰촨성 이빈)", lat:28.772, lng:104.642, category:"바이주·농향형", emoji:"🍶",
+    founded:"1909년 (역사는 송나라)", founder:"덩쯔쥔(邓子均)", parent:"Wuliangye Yibin Co., Ltd. (국영)", flagship:"普五 (푸우) 52%",
+    abv:"39~68%",
+    awards:"• 세계 2위 주류 브랜드 가치\n• Fortune China 500 164위\n• 56개국 면세점 직접 판매",
+    desc:"이름 뜻: 다섯 곡물의 술(五粮液). 수수·쌀·찹쌀·밀·옥수수 5가지 곡물 원료. 농향형(浓香型) 대표. 진흙 웅덩이에서 장기 발효해 에스테르 성분 다량 생성. 파인애플·감초 향. 2022년 매출 740억 위안(약 23조원). 100개국 이상 수출.",
+    wiki:"https://en.wikipedia.org/wiki/Wuliangye",
+    products:[
+      { name:"普五 (푸우) 52%", abv:"52%", desc:"대표 제품. 부드럽고 달콤한 풍미." },
+      { name:"1618 시리즈", abv:"52%", desc:"프리미엄 라인." },
+      { name:"经典五粮液", abv:"52%", desc:"클래식 라인." },
+    ],
+    color:"#a855f7" },
+  { name:"루저우라오쟈오 (泸州老窖)", country:"중국 (쓰촨성 루저우)", lat:28.87, lng:105.44, category:"바이주·농향형", emoji:"🍶",
+    founded:"1573년", founder:"쉬스화(舒聚源)", parent:"Luzhou Laojiao Co., Ltd.", flagship:"国窖1573",
+    abv:"52%",
+    awards:"• 중국 4대 명주 중 하나\n• 1573년 창업, 중국 국가급 무형문화유산 지정\n• 가장 오래된 연속 운영 바이주 증류소",
+    desc:"1573년에 만든 진흙 발효 웅덩이(窖池)를 현재도 사용. 중국 4대 명주 중 하나. 국窖1573은 세계에서 가장 오래된 연속 사용 발효 웅덩이로 만든 술. 깊고 복잡한 농향형 풍미. 쓰촨 요리와 페어링 최적.",
+    wiki:"https://en.wikipedia.org/wiki/Baijiu",
+    products:[
+      { name:"国窖1573", abv:"52%", desc:"1573년 웅덩이 원액. 최고급 라인." },
+      { name:"泸州老窖特曲", abv:"52%", desc:"대중적 스탠다드 라인." },
+    ],
+    color:"#a855f7" },
+  { name:"펀주 (汾酒)", country:"중국 (산시성 펀양)", lat:37.27, lng:111.782, category:"바이주·청향형", emoji:"🍶",
+    founded:"1948년 (역사는 1500년 이상)", founder:"산시성 국영", parent:"Shanxi Xinghuacun Fenjiu Group", flagship:"青花汾酒 (칭화 펀주)",
+    abv:"42~53%",
+    awards:"• 중국 4대 명주 중 하나\n• 청향형 바이주의 원조\n• 역사 1500년 이상",
+    desc:"청향형(清香型) 바이주의 원조. 수수 단일 원료, 돌항아리 발효. 가볍고 깨끗한 꽃향기가 특징. 얼궈터우의 원류. 중국 역사상 가장 오래된 바이주 계보 중 하나. 당나라 시인 두목의 시에 등장('借问酒家何处有，牧童遥指杏花村').",
+    wiki:"https://en.wikipedia.org/wiki/Baijiu",
+    products:[
+      { name:"青花汾酒 20년", abv:"53%", desc:"프리미엄 라인. 청아한 꽃향기." },
+      { name:"玻汾 (보펀)", abv:"48%", desc:"대중적 스탠다드 제품." },
+    ],
+    color:"#a855f7" },
+  { name:"얼궈터우 (二锅头)", country:"중국 (베이징)", lat:39.93, lng:116.39, category:"바이주·청향형", emoji:"🍶",
+    founded:"1949년", founder:"베이징 홍싱(红星)", parent:"Beijing Red Star Co., Ltd.", flagship:"红星二锅头 56%",
+    abv:"56%",
+    awards:"• 베이징 대표 서민 술\n• 중국에서 가장 많이 팔리는 저가 바이주",
+    desc:"베이징 서민의 술. 청향형(清香型). 이름 뜻: 두 번째 솥에서 나온 술(두 번째 증류액). 수수 원료. 강한 알코올 향에 깔끔한 뒷맛. 저렴한 가격으로 대중적 인기. 작은 빨간 병이 상징. 외국인에게 '중국 소주'로 통함.",
+    wiki:"https://en.wikipedia.org/wiki/Baijiu",
+    products:[
+      { name:"红星二锅头 56%", abv:"56%", desc:"대표 빨간 병 제품." },
+      { name:"牛栏山二锅头", abv:"56%", desc:"경쟁 브랜드. 역시 대중적 인기." },
+    ],
+    color:"#a855f7" },
+  { name:"황주 — 사오싱주 (紹興酒)", country:"중국 (저장성 사오싱)", lat:30.002, lng:120.582, category:"황주(발효주)", emoji:"🍶",
+    founded:"기원전 490년경 (월왕 구천 시대)", founder:"월나라 (越國)", parent:"Kuaijishan Shaoxing Wine Co.", flagship:"花雕酒 (화댜오주)",
+    abv:"14~20%",
+    awards:"• 중국 황주의 대명사\n• 국가급 무형문화유산 지정\n• 수천 년 역사",
+    desc:"중국 최고(最古) 발효주. 찹쌀·밀 누룩·사오싱 물 원료. 달콤하고 복잡한 풍미. 따뜻하게 데워 마시거나 요리에 사용. 화댜오주(花雕酒)는 도자기 항아리에 조각을 새겨 숙성한 고급품. 예로부터 딸이 태어나면 담가 결혼 때 여는 '女儿红(뉘얼홍)' 전통 있음.",
+    wiki:"https://en.wikipedia.org/wiki/Huangjiu",
+    products:[
+      { name:"花雕酒 (화댜오주)", abv:"17%", desc:"항아리에 조각 새긴 고급 황주." },
+      { name:"女儿红 (뉘얼홍)", abv:"16%", desc:"딸 탄생 시 담가 결혼 때 여는 전통주." },
+      { name:"加饭酒 (자판주)", abv:"18%", desc:"쌀 비율이 높아 달콤한 스타일." },
+    ],
+    color:"#a855f7" },
   // 위스키 — 카발란 (위키백과 출처)
   { name:"카발란", country:"대만 (이란현 위안산)", lat:24.75, lng:121.75, category:"위스키", emoji:"🥃",
     founded:"2005년", founder:"킹카 그룹 (蔡衍明)", parent:"King Car Group", flagship:"Kavalan Solist Vinho Barrique · Kavalan Classic",
