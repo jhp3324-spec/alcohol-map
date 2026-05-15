@@ -386,8 +386,9 @@
       text-align: center; text-decoration: none; white-space: nowrap; min-width: 100px;
     }
     .recog-result-btn.primary { background: #f4a261; color: #1a1a2e; }
-    .recog-result-btn.naver { background: #03C75A; color: #fff; }
-    .recog-result-btn.close-btn { background: #333; color: #ccc; flex: 0 0 48px; min-width: 0; }
+    .recog-result-btn.naver { background: #444; color: #ccc; }
+    .recog-result-btn.dailyshot-btn { background: #03C75A; color: #fff; flex: 2; }
+    .recog-result-btn.close-btn { background: #222; color: #888; flex: 0 0 40px; min-width: 0; padding: 6px; }
   </style>
 </head>
 <body>
@@ -421,15 +422,25 @@
   <button class="scan-cancel" onclick="cancelScan()">취소</button>
 </div>
 
-<!-- 인식 결과 -->
+<!-- 인식 결과 시트 -->
 <div class="recog-result" id="recog-result">
-  <div class="recog-result-title">📷 사진 인식 결과</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+    <div class="recog-result-title">📷 사진 인식 결과</div>
+    <button class="recog-result-btn close-btn" onclick="closeRecog()" style="flex:none;padding:4px 10px;font-size:16px;margin:0;">✕</button>
+  </div>
   <div class="recog-result-name" id="recog-name">-</div>
   <div class="recog-result-sub" id="recog-sub"></div>
+
+  <!-- 데일리샷 결과 카드 (1차) -->
+  <div id="ds-card" style="display:none;background:#0f0f23;border-radius:12px;padding:12px 14px;margin-bottom:12px;">
+    <div style="font-size:11px;color:#03C75A;font-weight:700;margin-bottom:6px;">📲 데일리샷 검색 결과</div>
+    <div id="ds-list"></div>
+  </div>
+
   <div class="recog-result-btns">
-    <button class="recog-result-btn primary" id="recog-goto" style="display:none">지도에서 보기</button>
-    <a class="recog-result-btn naver" id="recog-naver" href="#" target="_blank">🟢 네이버 검색</a>
-    <button class="recog-result-btn close-btn" onclick="closeRecog()">✕</button>
+    <a class="recog-result-btn dailyshot-btn" id="recog-dailyshot" href="#" target="_blank">📲 데일리샷</a>
+    <a class="recog-result-btn naver" id="recog-naver" href="#" target="_blank">🔍 네이버</a>
+    <button class="recog-result-btn primary" id="recog-goto" style="display:none">🗺️ 지도</button>
   </div>
 </div>
 
@@ -1212,16 +1223,19 @@ document.addEventListener('click', e => {
 });
 
 // ── 📷 사진 인식 (Tesseract.js OCR + 네이버 검색 연동) ─────────
-const camBtn      = document.getElementById('cam-btn');
-const camInput    = document.getElementById('cam-input');
-const scanOverlay = document.getElementById('scan-overlay');
-const scanLabel   = document.getElementById('scan-label');
-const scanPreview = document.getElementById('scan-preview');
-const recogResult = document.getElementById('recog-result');
-const recogName   = document.getElementById('recog-name');
-const recogSub    = document.getElementById('recog-sub');
-const recogGoto   = document.getElementById('recog-goto');
-const recogNaver  = document.getElementById('recog-naver');
+const camBtn         = document.getElementById('cam-btn');
+const camInput       = document.getElementById('cam-input');
+const scanOverlay    = document.getElementById('scan-overlay');
+const scanLabel      = document.getElementById('scan-label');
+const scanPreview    = document.getElementById('scan-preview');
+const recogResult    = document.getElementById('recog-result');
+const recogName      = document.getElementById('recog-name');
+const recogSub       = document.getElementById('recog-sub');
+const recogGoto      = document.getElementById('recog-goto');
+const recogNaver     = document.getElementById('recog-naver');
+const recogDailyshot = document.getElementById('recog-dailyshot');
+const dsCard         = document.getElementById('ds-card');
+const dsList         = document.getElementById('ds-list');
 
 let scanActive = false;
 
@@ -1328,30 +1342,46 @@ camInput.addEventListener('change', async () => {
     }
 
     if (!labelText.trim()) {
-      showRecog('텍스트 인식 실패', '라벨이 잘 보이도록 다시 촬영하거나\n아래 네이버 검색 버튼을 눌러보세요.', '술 라벨', null);
+      await showRecog('텍스트 인식 실패', '라벨이 잘 보이도록 다시 촬영하거나\n아래 데일리샷·네이버 버튼을 눌러보세요.', '술 라벨', null);
     } else if (bestMatch && bestScore >= 3) {
-      showRecog(bestMatch.name, `📝 라벨: "${labelText}"`, labelText, bestMatch);
+      await showRecog(bestMatch.name, `📝 라벨: "${labelText}"`, labelText, bestMatch);
     } else if (bestMatch && bestScore >= 1) {
-      showRecog(bestMatch.name + ' (?)', `📝 라벨: "${labelText}"\n유사한 항목을 찾았습니다. 확인해보세요.`, labelText, bestMatch);
+      await showRecog(bestMatch.name + ' (?)', `📝 라벨: "${labelText}"\n유사한 항목입니다. 확인해보세요.`, labelText, bestMatch);
     } else {
-      showRecog('DB에 없는 술', `📝 라벨: "${labelText}"`, labelText, null);
+      await showRecog('DB에 없는 술', `📝 라벨: "${labelText}"`, labelText, null);
     }
 
   } catch (err) {
     if (!scanActive) return;
     scanOverlay.classList.remove('active');
-    showRecog('인식 오류', `오류: ${err.message}\n네이버에서 직접 검색해보세요.`, '술', null);
+    await showRecog('인식 오류', `오류: ${err.message}`, '술', null);
   }
 });
 
-function showRecog(name, sub, labelText, matchedData) {
+// 데일리샷 API 검색 (CORS 허용 시 실제 결과, 아니면 null)
+async function searchDailyshotAPI(query) {
+  try {
+    const res = await fetch(
+      `https://api.dailyshot.co/items?q=${encodeURIComponent(query)}&limit=3`,
+      { headers: { Accept: 'application/json' } }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    return (data.results || data.items || []).slice(0, 3);
+  } catch { return null; }
+}
+
+async function showRecog(name, sub, labelText, matchedData) {
   recogName.textContent = name;
-  recogSub.textContent = sub;
+  recogSub.textContent  = sub;
 
-  // 네이버 검색 + 파파고 번역 링크
-  const nq = encodeURIComponent((labelText || name) + ' 술');
-  recogNaver.href = `https://search.naver.com/search.naver?query=${nq}`;
+  // 버튼 링크 설정
+  const dsQ  = encodeURIComponent(labelText || name);
+  const navQ = encodeURIComponent((labelText || name) + ' 술');
+  recogDailyshot.href = `https://dailyshot.co/m/search/result?q=${dsQ}`;
+  recogNaver.href     = `https://search.naver.com/search.naver?query=${navQ}`;
 
+  // 지도 버튼
   if (matchedData) {
     recogGoto.style.display = 'block';
     recogGoto.onclick = () => {
@@ -1365,7 +1395,32 @@ function showRecog(name, sub, labelText, matchedData) {
     recogGoto.style.display = 'none';
   }
 
+  // 패널 먼저 표시
+  dsCard.style.display = 'none';
+  dsList.innerHTML = '';
   recogResult.classList.add('active');
+
+  // 데일리샷 API 비동기 조회 (결과 있으면 카드 표시)
+  if (labelText) {
+    const dsItems = await searchDailyshotAPI(labelText);
+    if (dsItems && dsItems.length > 0) {
+      dsList.innerHTML = dsItems.map(item => `
+        <a href="https://dailyshot.co/m/item/${item.id}" target="_blank"
+           style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #222;text-decoration:none;color:inherit;">
+          <img src="${item.thumbnail_image||''}" onerror="this.style.display='none'"
+               style="width:44px;height:44px;object-fit:contain;border-radius:6px;background:#1a1a2e;flex-shrink:0;">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:600;color:#eee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name||''}</div>
+            <div style="font-size:11px;color:#888;margin-top:2px;">
+              ${item.category||''} ${item.subcategory ? '· '+item.subcategory : ''}
+              ${item.price ? ' · ₩'+item.price.toLocaleString() : ''}
+              ${item.review_rate ? ' · ⭐'+item.review_rate : ''}
+            </div>
+          </div>
+        </a>`).join('');
+      dsCard.style.display = 'block';
+    }
+  }
 }
 </script>
 </body>
