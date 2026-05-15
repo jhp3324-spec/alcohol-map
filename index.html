@@ -319,71 +319,70 @@
     .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
     .legend-sq  { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
 
-    /* 📷 사진 인식 */
-    .cam-btn {
-      position: absolute; right: 38px; top: 50%; transform: translateY(-50%);
-      background: none; border: none; font-size: 18px; cursor: pointer;
-      line-height: 1; padding: 2px; opacity: 0.7; transition: opacity 0.2s;
+    /* 📷 사진 검색 버튼 (FAB) */
+    .photo-fab {
+      position: fixed; bottom: 36px; right: 24px; z-index: 1200;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
     }
-    .cam-btn:hover { opacity: 1; }
+    .photo-fab-btn {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, #f4a261, #e76f51);
+      border: none; font-size: 28px; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(244,162,97,0.5);
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .photo-fab-btn:hover { transform: scale(1.1); box-shadow: 0 6px 24px rgba(244,162,97,0.7); }
+    .photo-fab-btn:active { transform: scale(0.95); }
+    .photo-fab-label {
+      font-size: 11px; color: #f4a261; font-weight: 600;
+      background: rgba(26,26,46,0.9); padding: 3px 8px; border-radius: 8px;
+      white-space: nowrap;
+    }
 
     /* 스캔 오버레이 */
     .scan-overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.75); z-index: 9000;
-      flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+      background: rgba(0,0,0,0.85); z-index: 9000;
+      flex-direction: column; align-items: center; justify-content: center; gap: 18px;
     }
     .scan-overlay.active { display: flex; }
+    .scan-preview {
+      width: 220px; height: 220px; object-fit: cover;
+      border-radius: 18px; border: 3px solid #f4a261; display: none;
+    }
     .scan-spinner {
-      width: 64px; height: 64px; border: 5px solid #333;
+      width: 60px; height: 60px; border: 5px solid #333;
       border-top-color: #f4a261; border-radius: 50%;
       animation: spin 0.9s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .scan-label { color: #eee; font-size: 16px; }
-    .scan-preview {
-      width: 200px; height: 200px; object-fit: cover;
-      border-radius: 16px; border: 2px solid #f4a261; display: none;
+    .scan-label { color: #eee; font-size: 15px; text-align: center; padding: 0 20px; }
+    .scan-cancel {
+      margin-top: 4px; padding: 8px 24px; background: #333;
+      border: none; color: #ccc; border-radius: 20px; cursor: pointer; font-size: 14px;
     }
 
-    /* API 키 모달 */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.8); z-index: 9500;
-      align-items: center; justify-content: center;
+    /* 인식 결과 패널 */
+    .recog-result {
+      display: none; position: fixed; bottom: 120px; right: 24px; z-index: 8000;
+      background: #1e1e3a; border: 2px solid #f4a261; border-radius: 16px;
+      padding: 16px 18px; max-width: 280px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
     }
-    .modal-overlay.active { display: flex; }
-    .modal-box {
-      background: #1e1e3a; border: 1px solid #f4a261;
-      border-radius: 16px; padding: 28px 24px; max-width: 380px; width: 90%;
+    .recog-result.active { display: block; }
+    .recog-result-title { font-size: 11px; color: #888; margin-bottom: 6px; }
+    .recog-result-name { font-size: 15px; font-weight: 700; color: #f4a261; margin-bottom: 4px; }
+    .recog-result-sub { font-size: 12px; color: #aaa; margin-bottom: 10px; line-height: 1.5; }
+    .recog-result-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .recog-result-btn {
+      flex: 1; padding: 7px 10px; border: none; border-radius: 8px;
+      font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit;
+      text-align: center; text-decoration: none; white-space: nowrap;
     }
-    .modal-box h3 { font-size: 16px; margin-bottom: 8px; color: #f4a261; }
-    .modal-box p { font-size: 13px; color: #aaa; margin-bottom: 16px; line-height: 1.6; }
-    .modal-box input {
-      width: 100%; padding: 10px 14px; background: #0f0f23;
-      border: 1.5px solid #444; border-radius: 8px; color: #eee;
-      font-size: 13px; font-family: inherit; outline: none; margin-bottom: 12px;
-    }
-    .modal-box input:focus { border-color: #f4a261; }
-    .modal-btn-row { display: flex; gap: 10px; }
-    .modal-btn {
-      flex: 1; padding: 10px; border: none; border-radius: 8px;
-      font-size: 14px; font-family: inherit; cursor: pointer; font-weight: 600;
-    }
-    .modal-btn.primary { background: #f4a261; color: #1a1a2e; }
-    .modal-btn.secondary { background: #333; color: #ccc; }
-
-    /* 인식 결과 토스트 */
-    .recog-toast {
-      display: none; position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
-      background: #1e1e3a; border: 1px solid #f4a261; border-radius: 12px;
-      padding: 14px 20px; z-index: 8000; min-width: 260px; max-width: 90vw;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-    }
-    .recog-toast.active { display: block; }
-    .recog-toast-title { font-size: 12px; color: #888; margin-bottom: 4px; }
-    .recog-toast-name { font-size: 16px; font-weight: 700; color: #f4a261; }
-    .recog-toast-sub { font-size: 12px; color: #aaa; margin-top: 2px; }
+    .recog-result-btn.primary { background: #f4a261; color: #1a1a2e; }
+    .recog-result-btn.naver { background: #03C75A; color: #fff; }
+    .recog-result-btn.close-btn { background: #333; color: #ccc; flex: 0 0 auto; }
   </style>
 </head>
 <body>
@@ -397,10 +396,15 @@
   <div class="search-input-wrap">
     <span class="search-icon">🔍</span>
     <input type="text" id="search-input" placeholder="술 이름, 브랜드, 나라, 종류로 검색...">
-    <button class="cam-btn" id="cam-btn" title="사진으로 검색">📷</button>
     <button class="search-clear" id="search-clear">✕</button>
     <div class="search-results" id="search-results"></div>
   </div>
+</div>
+
+<!-- 📷 FAB 사진 검색 버튼 -->
+<div class="photo-fab">
+  <button class="photo-fab-btn" id="cam-btn" title="술 사진으로 검색">📷</button>
+  <span class="photo-fab-label">사진검색</span>
 </div>
 <input type="file" id="cam-input" accept="image/*" capture="environment" style="display:none">
 
@@ -408,29 +412,20 @@
 <div class="scan-overlay" id="scan-overlay">
   <img class="scan-preview" id="scan-preview">
   <div class="scan-spinner"></div>
-  <div class="scan-label" id="scan-label">🤖 AI가 술을 인식하는 중...</div>
+  <div class="scan-label" id="scan-label">📷 라벨 텍스트 인식 중...</div>
+  <button class="scan-cancel" onclick="cancelScan()">취소</button>
 </div>
 
-<!-- API 키 입력 모달 -->
-<div class="modal-overlay" id="key-modal">
-  <div class="modal-box">
-    <h3>🔑 Anthropic API 키 설정</h3>
-    <p>사진 인식에 Claude AI를 사용합니다.<br>
-    API 키는 이 기기에만 저장됩니다.<br>
-    <a href="https://console.anthropic.com/" target="_blank" style="color:#f4a261">console.anthropic.com</a>에서 발급</p>
-    <input type="password" id="api-key-input" placeholder="sk-ant-...">
-    <div class="modal-btn-row">
-      <button class="modal-btn secondary" onclick="closeKeyModal()">취소</button>
-      <button class="modal-btn primary" onclick="saveApiKey()">저장 후 촬영</button>
-    </div>
+<!-- 인식 결과 -->
+<div class="recog-result" id="recog-result">
+  <div class="recog-result-title">📷 사진 인식 결과</div>
+  <div class="recog-result-name" id="recog-name">-</div>
+  <div class="recog-result-sub" id="recog-sub"></div>
+  <div class="recog-result-btns">
+    <button class="recog-result-btn primary" id="recog-goto" style="display:none">지도에서 보기</button>
+    <a class="recog-result-btn naver" id="recog-naver" href="#" target="_blank">🔍 네이버 검색</a>
+    <button class="recog-result-btn close-btn" onclick="closeRecog()">✕</button>
   </div>
-</div>
-
-<!-- 인식 결과 토스트 -->
-<div class="recog-toast" id="recog-toast">
-  <div class="recog-toast-title">📷 사진 인식 결과</div>
-  <div class="recog-toast-name" id="recog-name"></div>
-  <div class="recog-toast-sub" id="recog-sub"></div>
 </div>
 
 <div class="filter-bar">
@@ -1162,126 +1157,129 @@ document.addEventListener('click', e => {
   }
 });
 
-// ── 📷 사진 인식 기능 ─────────────────────────────
-const camBtn     = document.getElementById('cam-btn');
-const camInput   = document.getElementById('cam-input');
+// ── 📷 사진 인식 (Tesseract.js OCR + 네이버 검색 연동) ─────────
+const camBtn      = document.getElementById('cam-btn');
+const camInput    = document.getElementById('cam-input');
 const scanOverlay = document.getElementById('scan-overlay');
-const scanLabel  = document.getElementById('scan-label');
+const scanLabel   = document.getElementById('scan-label');
 const scanPreview = document.getElementById('scan-preview');
-const keyModal   = document.getElementById('key-modal');
-const apiKeyInput = document.getElementById('api-key-input');
-const recogToast = document.getElementById('recog-toast');
-const recogName  = document.getElementById('recog-name');
-const recogSub   = document.getElementById('recog-sub');
+const recogResult = document.getElementById('recog-result');
+const recogName   = document.getElementById('recog-name');
+const recogSub    = document.getElementById('recog-sub');
+const recogGoto   = document.getElementById('recog-goto');
+const recogNaver  = document.getElementById('recog-naver');
 
-function getApiKey() { return localStorage.getItem('anthropic_api_key') || ''; }
-function closeKeyModal() { keyModal.classList.remove('active'); }
-function saveApiKey() {
-  const k = apiKeyInput.value.trim();
-  if (!k.startsWith('sk-')) { alert('올바른 API 키를 입력하세요 (sk-ant-...)'); return; }
-  localStorage.setItem('anthropic_api_key', k);
-  closeKeyModal();
-  camInput.click();
+let scanActive = false;
+
+function cancelScan() {
+  scanActive = false;
+  scanOverlay.classList.remove('active');
 }
+function closeRecog() { recogResult.classList.remove('active'); }
 
-camBtn.addEventListener('click', () => {
-  if (!getApiKey()) { keyModal.classList.add('active'); apiKeyInput.focus(); return; }
-  camInput.click();
-});
+camBtn.addEventListener('click', () => camInput.click());
 
 camInput.addEventListener('change', async () => {
   const file = camInput.files[0];
   if (!file) return;
   camInput.value = '';
+  scanActive = true;
 
-  // 미리보기 표시
-  const reader = new FileReader();
-  reader.onload = async (e) => {
-    const dataUrl = e.target.result;
-    const base64 = dataUrl.split(',')[1];
-    const mimeType = file.type || 'image/jpeg';
+  const dataUrl = await new Promise(r => {
+    const fr = new FileReader();
+    fr.onload = e => r(e.target.result);
+    fr.readAsDataURL(file);
+  });
 
-    scanPreview.src = dataUrl;
-    scanPreview.style.display = 'block';
-    scanOverlay.classList.add('active');
-    scanLabel.textContent = '🤖 AI가 술을 인식하는 중...';
+  scanPreview.src = dataUrl;
+  scanPreview.style.display = 'block';
+  scanOverlay.classList.add('active');
+  scanLabel.textContent = '📷 라벨 텍스트 인식 중...';
 
-    try {
-      const apiKey = getApiKey();
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-          'content-type': 'application/json',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 150,
-          messages: [{
-            role: 'user',
-            content: [
-              { type: 'image', source: { type: 'base64', media_type: mimeType, data: base64 } },
-              { type: 'text', text: '이 사진에 보이는 술(주류) 브랜드와 제품명을 알려주세요. 한국어 이름으로 답하고, 영어 이름도 괄호에 넣어주세요. 예: "발렌타인 17년 (Ballantine\'s 17)", "글렌리벳 12년 (Glenlivet 12)", "마오타이 (Moutai)". 술이 안 보이거나 모르면 딱 "인식불가"라고만 답하세요. 브랜드명과 제품명만 짧게 답하세요.' }
-            ]
-          }]
-        })
+  try {
+    // Tesseract.js 동적 로드 (첫 사용 시만)
+    if (!window.Tesseract) {
+      scanLabel.textContent = '⏳ 인식 엔진 로드 중...';
+      await new Promise((res, rej) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+        s.onload = res; s.onerror = rej;
+        document.head.appendChild(s);
       });
-
-      if (!res.ok) {
-        const err = await res.json();
-        if (res.status === 401) {
-          scanOverlay.classList.remove('active');
-          localStorage.removeItem('anthropic_api_key');
-          alert('API 키가 올바르지 않습니다. 다시 설정해주세요.');
-          return;
-        }
-        throw new Error(err.error?.message || 'API 오류');
-      }
-
-      const data = await res.json();
-      const recognized = data.content[0].text.trim();
-      scanOverlay.classList.remove('active');
-
-      if (recognized === '인식불가' || recognized.includes('인식불가')) {
-        showToast('인식 실패', '술 라벨이 잘 보이지 않아요. 다시 촬영해보세요.', true);
-        return;
-      }
-
-      // 인식된 이름으로 데이터베이스 검색
-      const searchTerm = recognized.replace(/\(.*?\)/g, '').trim();
-      const firstWord = searchTerm.split(' ')[0];
-      const foundInDb = allData.find(d => {
-        const fields = [d.name, d.category || '', d.type || '', ...(d.keywords || [])];
-        return fields.some(f => f.toLowerCase().includes(firstWord.toLowerCase()) ||
-          firstWord.toLowerCase().includes(f.toLowerCase().split(' ')[0]));
-      });
-
-      showToast(recognized, foundInDb ? `✅ 데이터베이스에서 찾았어요!` : `ℹ️ 데이터베이스에 없는 술이에요`);
-
-      if (foundInDb) {
-        searchInput.value = foundInDb.name;
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-type="all"]').classList.add('active');
-        renderMarkers('all');
-        setTimeout(() => { flyToMarker(foundInDb); openPanel(foundInDb); }, 200);
-      }
-
-    } catch (err) {
-      scanOverlay.classList.remove('active');
-      showToast('오류 발생', err.message, true);
     }
-  };
-  reader.readAsDataURL(file);
+
+    if (!scanActive) return;
+    scanLabel.textContent = '🔍 라벨에서 텍스트 추출 중...';
+
+    const result = await Tesseract.recognize(dataUrl, 'eng+kor', {
+      logger: m => {
+        if (m.status === 'recognizing text' && scanActive)
+          scanLabel.textContent = `🔍 인식 중... ${Math.round((m.progress||0)*100)}%`;
+      }
+    });
+
+    if (!scanActive) return;
+    scanOverlay.classList.remove('active');
+
+    const rawText = result.data.text.trim();
+    // 의미 있는 단어만 추출 (3글자 이상, 숫자/특수문자 제외)
+    const words = rawText.split(/[\s\n,.|;:()[\]{}]+/)
+      .map(w => w.replace(/[^a-zA-Z가-힣]/g, ''))
+      .filter(w => w.length >= 3);
+
+    if (words.length === 0) {
+      showRecog('텍스트 인식 실패', '라벨이 잘 보이도록 다시 촬영해 보세요.', rawText, null);
+      return;
+    }
+
+    // DB에서 매칭 검색
+    let bestMatch = null;
+    let bestScore = 0;
+    for (const d of allData) {
+      const fields = [d.name, d.category||'', d.type||'', ...(d.keywords||[])];
+      let score = 0;
+      for (const w of words) {
+        const wl = w.toLowerCase();
+        if (fields.some(f => f.toLowerCase().includes(wl) || wl.includes(f.toLowerCase().replace(/\s/g,''))))
+          score++;
+      }
+      if (score > bestScore) { bestScore = score; bestMatch = d; }
+    }
+
+    const labelText = words.slice(0, 6).join(' ');
+    if (bestMatch && bestScore >= 1) {
+      showRecog(bestMatch.name, `라벨에서 읽은 텍스트: "${labelText}"`, labelText, bestMatch);
+    } else {
+      showRecog('데이터베이스에 없는 술', `라벨: "${labelText}"\n네이버에서 검색해 보세요.`, labelText, null);
+    }
+
+  } catch (err) {
+    scanOverlay.classList.remove('active');
+    showRecog('인식 오류', err.message, '', null);
+  }
 });
 
-function showToast(name, sub, isError = false) {
+function showRecog(name, sub, labelText, matchedData) {
   recogName.textContent = name;
   recogSub.textContent = sub;
-  recogToast.style.borderColor = isError ? '#ef4444' : '#f4a261';
-  recogToast.classList.add('active');
-  setTimeout(() => recogToast.classList.remove('active'), 4000);
+
+  const naverQuery = encodeURIComponent((labelText || name) + ' 술 위스키');
+  recogNaver.href = `https://search.naver.com/search.naver?query=${naverQuery}`;
+
+  if (matchedData) {
+    recogGoto.style.display = 'block';
+    recogGoto.onclick = () => {
+      closeRecog();
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-type="all"]').classList.add('active');
+      renderMarkers('all');
+      setTimeout(() => { flyToMarker(matchedData); openPanel(matchedData); }, 100);
+    };
+  } else {
+    recogGoto.style.display = 'none';
+  }
+
+  recogResult.classList.add('active');
 }
 </script>
 </body>
