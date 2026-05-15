@@ -172,8 +172,10 @@
     }
     .btn-google { background: #4285f4; color: #fff; }
     .btn-naver  { background: #03c75a; color: #fff; }
+    .btn-wiki   { background: #636466; color: #fff; }
     .btn-google:hover { background: #2563eb; }
     .btn-naver:hover  { background: #02a44a; }
+    .btn-wiki:hover   { background: #444; }
 
     /* 범례 */
     .legend {
@@ -249,10 +251,40 @@ const origins = [
   { name:"나파밸리 와인", country:"미국 (캘리포니아)", lat:38.50, lng:-122.27, type:"와인", emoji:"🍷", abv:"13~15%", desc:"1976년 파리의 심판에서 프랑스를 제친 미국 와인.", style:"레드 와인", color:"#dc2626" },
   { name:"말벡", country:"아르헨티나 (멘도사)", lat:-32.89, lng:-68.82, type:"와인", emoji:"🍷", abv:"13~15%", desc:"프랑스 원산이나 아르헨티나에서 완성된 품종.", style:"레드 와인", color:"#dc2626" },
   { name:"소비뇽 블랑", country:"뉴질랜드 (말버러)", lat:-41.51, lng:173.96, type:"와인", emoji:"🍷", abv:"12~13%", desc:"패션후르츠·허브 향의 세계적 소비뇽 블랑.", style:"화이트 와인", color:"#dc2626" },
-  { name:"스카치 위스키", country:"스코틀랜드 (에든버러)", lat:55.95, lng:-3.19, type:"위스키", emoji:"🥃", abv:"40~46%", desc:"오크통 숙성 3년 이상. 싱글몰트의 본고장.", style:"싱글몰트", color:"#92400e" },
-  { name:"아이리시 위스키", country:"아일랜드 (코크)", lat:51.90, lng:-8.47, type:"위스키", emoji:"🥃", abv:"40%", desc:"3회 증류로 부드러운 맛.", style:"블렌디드", color:"#92400e" },
-  { name:"버번 위스키", country:"미국 (켄터키)", lat:37.84, lng:-84.27, type:"위스키", emoji:"🥃", abv:"40~50%", desc:"옥수수 51% 이상, 새 오크통 숙성.", style:"버번", color:"#92400e" },
-  { name:"캐나디안 위스키", country:"캐나다 (온타리오)", lat:43.65, lng:-79.38, type:"위스키", emoji:"🥃", abv:"40%", desc:"라이 위스키 기반. 가볍고 부드러운 스타일.", style:"블렌디드", color:"#92400e" },
+  // 위스키 원산지 — 출처: 위키백과
+  { name:"스카치 위스키 (스페이사이드)", country:"스코틀랜드 (스페이사이드)", lat:57.48, lng:-3.20, type:"위스키", emoji:"🥃", abv:"40~46%",
+    style:"싱글몰트", wiki:"https://ko.wikipedia.org/wiki/스카치_위스키",
+    desc:"스코틀랜드 최대 위스키 산지. 맥캘란·글렌피딕·발베니 등 50개 이상 증류소. 과일·꿀·바닐라 향이 특징. 4~5세기 수도승이 전래한 증류 기술이 기원. 1823년 소비세법으로 합법화.", color:"#92400e" },
+  { name:"스카치 위스키 (아일레이)", country:"스코틀랜드 (아일레이 섬)", lat:55.75, lng:-6.20, type:"위스키", emoji:"🥃", abv:"40~46%",
+    style:"싱글몰트 (피티드)", wiki:"https://ko.wikipedia.org/wiki/스카치_위스키",
+    desc:"스모키·피트향의 본고장. 라프로익·아드벡·보모어 등이 유명. 바다 소금·요오드 향이 특징. 강렬하고 개성 강한 스타일로 마니아층 두텁다.", color:"#92400e" },
+  { name:"스카치 위스키 (하이랜드)", country:"스코틀랜드 (인버네스)", lat:57.48, lng:-4.22, type:"위스키", emoji:"🥃", abv:"40~46%",
+    style:"싱글몰트", wiki:"https://ko.wikipedia.org/wiki/스카치_위스키",
+    desc:"스코틀랜드 최대 면적의 위스키 산지. 달모어·오반·글렌모란지 등. 지역에 따라 풍미 다양. 발렌타인·조니워커 등 블렌디드 위스키의 주요 원액 산지.", color:"#92400e" },
+  { name:"아이리시 위스키", country:"아일랜드 (더블린)", lat:53.34, lng:-6.28, type:"위스키", emoji:"🥃", abv:"40%",
+    style:"싱글팟스틸·블렌디드", wiki:"https://ko.wikipedia.org/wiki/아이리시_위스키",
+    desc:"아일랜드섬에서 생산되는 위스키. 3회 증류로 부드럽고 가벼운 풍미. 싱글몰트·싱글팟스틸·그레인·블렌디드 4종으로 분류. 제임슨·부쉬밀스·털라모어D.E.W. 대표.", color:"#92400e" },
+  { name:"버번 위스키", country:"미국 (켄터키)", lat:37.84, lng:-84.27, type:"위스키", emoji:"🥃", abv:"40~50%",
+    style:"버번 (American Whiskey)", wiki:"https://ko.wikipedia.org/wiki/버번_위스키",
+    desc:"1964년 미국 의회가 '미국의 독특한 제품'으로 인정. 법적 기준: 최소 51% 옥수수, 새 탄화 참나무 통 숙성. 주로 켄터키주 생산. 2018년 약 36억 달러 규모 산업. 잭다니엘스·짐빔·메이커스마크 대표.", color:"#92400e" },
+  { name:"테네시 위스키", country:"미국 (린치버그)", lat:35.28, lng:-86.37, type:"위스키", emoji:"🥃", abv:"40%",
+    style:"테네시 위스키", wiki:"https://ko.wikipedia.org/wiki/버번_위스키",
+    desc:"버번과 유사하나 링컨 카운티 프로세스(단풍나무 숯 여과) 추가. 잭다니엘스가 대표. 버번으로 분류되지 않는 별도 카테고리.", color:"#92400e" },
+  { name:"재패니즈 위스키", country:"일본 (오사카·야마자키)", lat:34.89, lng:135.68, type:"위스키", emoji:"🥃", abv:"43~46%",
+    style:"싱글몰트·블렌디드", wiki:"https://ko.wikipedia.org/wiki/재패니즈_위스키",
+    desc:"1923년 야마자키 증류소 개설로 본격 시작. 스카치 위스키 스타일 기반. 산토리·닛카·기린이 국내 시장 90% 점유. 미즈나라(일본 참나무) 오크통 숙성이 독특한 향의 비결. 세계 각종 품평회 최고상 다수 수상.", color:"#92400e" },
+  { name:"재패니즈 위스키 (요이치)", country:"일본 (홋카이도 요이치)", lat:43.19, lng:140.78, type:"위스키", emoji:"🥃", abv:"43%",
+    style:"싱글몰트", wiki:"https://ko.wikipedia.org/wiki/재패니즈_위스키",
+    desc:"닛카 위스키(아사히 그룹 계열) 요이치 증류소. 1934년 다케쓰루 마사타카 설립. 스코틀랜드 스타일 피트향 보유. 홋카이도의 차가운 기후가 숙성에 영향.", color:"#92400e" },
+  { name:"캐나디안 위스키", country:"캐나다 (온타리오)", lat:43.65, lng:-79.38, type:"위스키", emoji:"🥃", abv:"40%",
+    style:"블렌디드", wiki:"https://ko.wikipedia.org/wiki/위스키",
+    desc:"라이(호밀)와 옥수수 위스키 블렌딩. 가볍고 부드러운 스타일. 3년 이상 오크통 숙성 의무. 크라운 로열·캐나디안 클럽이 대표 브랜드.", color:"#92400e" },
+  { name:"인디안 위스키", country:"인도 (뭄바이)", lat:19.08, lng:72.88, type:"위스키", emoji:"🥃", abv:"42.8%",
+    style:"몰트·블렌디드", wiki:"https://ko.wikipedia.org/wiki/위스키",
+    desc:"세계 최대 위스키 소비국 중 하나. 암룻·폴존이 세계 품평회 상위 수상. 열대 기후로 숙성 속도가 스코틀랜드보다 3배 빠름.", color:"#92400e" },
+  { name:"대만 위스키", country:"대만 (난터우)", lat:23.87, lng:120.70, type:"위스키", emoji:"🥃", abv:"46%",
+    style:"싱글몰트", wiki:"https://ko.wikipedia.org/wiki/위스키",
+    desc:"카발란(Kavalan) 브랜드로 세계 주목. 2010년 스카치 위스키를 꺾고 세계 1위 수상. 아열대 기후로 빠른 숙성. 위스키 신흥 강국.", color:"#92400e" },
   { name:"참이슬 (소주)", country:"대한민국 (서울)", lat:37.51, lng:126.88, type:"소주·청주", emoji:"🍶", abv:"16.9%", desc:"한국 최대 판매량 소주.", style:"희석식 소주", color:"#3b82f6" },
   { name:"안동소주", country:"대한민국 (안동)", lat:36.57, lng:128.73, type:"소주·청주", emoji:"🍶", abv:"45%", desc:"증류식 전통 소주. 고려시대부터 이어온 명주.", style:"증류식 소주", color:"#3b82f6" },
   { name:"사케 (청주)", country:"일본 (니가타)", lat:37.90, lng:139.02, type:"소주·청주", emoji:"🍶", abv:"15~16%", desc:"쌀과 누룩으로 빚은 일본 전통주.", style:"순미다이긴죠", color:"#3b82f6" },
@@ -420,10 +452,14 @@ function createMarker(d) {
   let popupHtml;
   const gLink = `https://www.google.com/search?q=${encodeURIComponent(d.name + ' 술 브랜드')}`;
   const nLink = `https://search.naver.com/search.naver?query=${encodeURIComponent(d.name + ' 술')}`;
+  const wikiBtn = d.wiki
+    ? `<a class="popup-link-btn btn-wiki" href="${d.wiki}" target="_blank">📖 위키백과</a>`
+    : '';
   const searchBtns = `
-    <div class="popup-links">
-      <a class="popup-link-btn btn-google" href="${gLink}" target="_blank">🔍 구글 검색</a>
-      <a class="popup-link-btn btn-naver"  href="${nLink}" target="_blank">🔍 네이버 검색</a>
+    <div class="popup-links" style="flex-wrap:wrap;">
+      <a class="popup-link-btn btn-google" href="${gLink}" target="_blank">🔍 구글</a>
+      <a class="popup-link-btn btn-naver"  href="${nLink}" target="_blank">🔍 네이버</a>
+      ${wikiBtn}
     </div>`;
 
   if (d.isBrand) {
