@@ -27,149 +27,8 @@
       border-bottom: 1px solid #333;
       flex-shrink: 0;
     }
-
-    header h1 {
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-
+    header h1 { font-size: 20px; font-weight: 600; letter-spacing: 1px; }
     header h1 span { color: #f4a261; }
-
-    .filter-bar {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      padding: 10px 20px;
-      background: #16213e;
-      border-bottom: 1px solid #2a2a4a;
-      flex-shrink: 0;
-    }
-
-    .filter-btn {
-      padding: 5px 14px;
-      border-radius: 20px;
-      border: 1.5px solid #444;
-      background: transparent;
-      color: #ccc;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .filter-btn:hover { border-color: #f4a261; color: #f4a261; }
-    .filter-btn.active { background: #f4a261; border-color: #f4a261; color: #1a1a2e; font-weight: 700; }
-
-    #map {
-      flex: 1;
-      width: 100%;
-    }
-
-    /* 팝업 커스텀 */
-    .leaflet-popup-content-wrapper {
-      background: #1e1e3a;
-      border: 1px solid #f4a261;
-      border-radius: 12px;
-      color: #eee;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
-
-    .leaflet-popup-tip { background: #1e1e3a; }
-    .leaflet-popup-close-button { color: #aaa !important; }
-
-    .popup-content {
-      min-width: 200px;
-      padding: 4px 0;
-    }
-
-    .popup-emoji { font-size: 36px; text-align: center; margin-bottom: 6px; }
-
-    .popup-name {
-      font-size: 17px;
-      font-weight: 700;
-      color: #f4a261;
-      text-align: center;
-      margin-bottom: 3px;
-    }
-
-    .popup-origin {
-      font-size: 12px;
-      color: #aaa;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    .popup-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      padding: 3px 0;
-      border-bottom: 1px solid #333;
-      color: #ccc;
-    }
-
-    .popup-row:last-child { border-bottom: none; }
-    .popup-row span:first-child { color: #888; }
-
-    .popup-desc {
-      font-size: 12px;
-      color: #bbb;
-      margin-top: 8px;
-      line-height: 1.7;
-    }
-
-    .popup-tag {
-      display: inline-block;
-      background: #f4a261;
-      color: #1a1a2e;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 10px;
-      margin-bottom: 8px;
-    }
-
-    /* 범례 */
-    .legend {
-      position: fixed;
-      bottom: 30px;
-      left: 20px;
-      background: rgba(26,26,46,0.93);
-      border: 1px solid #333;
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 12px;
-      z-index: 1000;
-      min-width: 120px;
-    }
-
-    .legend h4 { font-size: 12px; color: #f4a261; margin-bottom: 8px; }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 5px;
-      color: #ccc;
-    }
-
-    .legend-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* 카운트 뱃지 */
-    .count-badge {
-      background: #f4a261;
-      color: #1a1a2e;
-      border-radius: 10px;
-      padding: 1px 7px;
-      font-size: 11px;
-      font-weight: 700;
-      margin-left: 6px;
-    }
 
     /* 검색 */
     .search-bar {
@@ -180,15 +39,10 @@
       position: relative;
       z-index: 1500;
     }
-
-    .search-input-wrap {
-      position: relative;
-      max-width: 400px;
-    }
-
+    .search-input-wrap { position: relative; max-width: 480px; }
     .search-input-wrap input {
       width: 100%;
-      padding: 9px 36px 9px 36px;
+      padding: 9px 36px;
       background: #0f0f23;
       border: 1.5px solid #444;
       border-radius: 24px;
@@ -198,50 +52,26 @@
       outline: none;
       transition: border-color 0.2s;
     }
-
     .search-input-wrap input:focus { border-color: #f4a261; }
     .search-input-wrap input::placeholder { color: #666; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 15px; pointer-events: none; }
+    .search-clear { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #888; font-size: 16px; cursor: pointer; display: none; line-height: 1; }
 
-    .search-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 15px;
-      pointer-events: none;
-    }
-
-    .search-clear {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: #888;
-      font-size: 16px;
-      cursor: pointer;
-      display: none;
-      line-height: 1;
-    }
-
-    /* 검색 결과 드롭다운 */
     .search-results {
       position: absolute;
       top: calc(100% + 4px);
       left: 0;
       width: 100%;
-      max-width: 400px;
+      max-width: 480px;
       background: #1e1e3a;
       border: 1px solid #f4a261;
       border-radius: 12px;
-      max-height: 280px;
+      max-height: 300px;
       overflow-y: auto;
       z-index: 2000;
       display: none;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
     }
-
     .search-result-item {
       display: flex;
       align-items: center;
@@ -251,63 +81,112 @@
       border-bottom: 1px solid #2a2a4a;
       transition: background 0.15s;
     }
-
     .search-result-item:last-child { border-bottom: none; }
     .search-result-item:hover { background: #2a2a4a; }
-
     .result-emoji { font-size: 22px; flex-shrink: 0; }
-
     .result-info { flex: 1; min-width: 0; }
+    .result-name { font-size: 14px; color: #eee; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .result-name mark { background: none; color: #f4a261; font-weight: 700; }
+    .result-meta { font-size: 11px; color: #888; margin-top: 2px; }
+    .result-type-badge { font-size: 10px; background: #333; color: #ccc; padding: 2px 7px; border-radius: 10px; flex-shrink: 0; }
+    .no-result { padding: 18px; text-align: center; color: #666; font-size: 13px; }
 
-    .result-name {
-      font-size: 14px;
-      color: #eee;
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .result-name mark {
-      background: none;
-      color: #f4a261;
-      font-weight: 700;
-    }
-
-    .result-meta {
-      font-size: 11px;
-      color: #888;
-      margin-top: 2px;
-    }
-
-    .result-type-badge {
-      font-size: 10px;
-      background: #333;
-      color: #ccc;
-      padding: 2px 7px;
-      border-radius: 10px;
+    /* 필터 */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background: #16213e;
+      border-bottom: 1px solid #2a2a4a;
       flex-shrink: 0;
     }
-
-    .no-result {
-      padding: 18px;
-      text-align: center;
-      color: #666;
+    .filter-btn {
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1.5px solid #444;
+      background: transparent;
+      color: #ccc;
       font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
+    .filter-btn:hover { border-color: #f4a261; color: #f4a261; }
+    .filter-btn.active { background: #f4a261; border-color: #f4a261; color: #1a1a2e; font-weight: 700; }
+    .count-badge { background: #f4a261; color: #1a1a2e; border-radius: 10px; padding: 1px 7px; font-size: 11px; font-weight: 700; margin-left: 4px; }
+    .filter-btn.active .count-badge { background: #1a1a2e; color: #f4a261; }
+
+    #map { flex: 1; width: 100%; }
+
+    /* 팝업 */
+    .leaflet-popup-content-wrapper {
+      background: #1e1e3a;
+      border: 1px solid #f4a261;
+      border-radius: 12px;
+      color: #eee;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .leaflet-popup-tip { background: #1e1e3a; }
+    .leaflet-popup-close-button { color: #aaa !important; font-size: 18px !important; }
+    .leaflet-popup-content { margin: 14px 16px; }
+
+    .popup-content { min-width: 210px; }
+    .popup-emoji { font-size: 34px; text-align: center; margin-bottom: 4px; }
+    .popup-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+    }
+    .tag-origin { background: #f4a261; color: #1a1a2e; }
+    .tag-brand  { background: #7c3aed; color: #fff; }
+    .popup-name { font-size: 17px; font-weight: 700; color: #f4a261; margin-bottom: 2px; }
+    .popup-sub  { font-size: 12px; color: #aaa; margin-bottom: 10px; }
+    .popup-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      padding: 4px 0;
+      border-bottom: 1px solid #2a2a3a;
+      gap: 8px;
+    }
+    .popup-row:last-of-type { border-bottom: none; }
+    .popup-row span:first-child { color: #888; flex-shrink: 0; }
+    .popup-row span:last-child { color: #ddd; text-align: right; }
+    .popup-desc { font-size: 12px; color: #bbb; margin-top: 8px; line-height: 1.7; border-top: 1px solid #2a2a3a; padding-top: 8px; }
+
+    /* 범례 */
+    .legend {
+      position: fixed;
+      bottom: 30px;
+      left: 20px;
+      background: rgba(26,26,46,0.95);
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 12px;
+      z-index: 1000;
+      min-width: 130px;
+    }
+    .legend h4 { font-size: 12px; color: #f4a261; margin-bottom: 8px; }
+    .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; color: #ccc; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .legend-sq  { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>🍷 세계 <span>술 원산지</span> 지도</h1>
-  <div style="font-size:12px;color:#888;">마커 클릭 시 상세 정보</div>
+  <h1>🍷 세계 <span>술 원산지 & 브랜드</span> 지도</h1>
+  <div style="font-size:12px;color:#888;">마커 클릭 → 상세 정보</div>
 </header>
 
 <div class="search-bar">
   <div class="search-input-wrap">
     <span class="search-icon">🔍</span>
-    <input type="text" id="search-input" placeholder="술 이름, 나라, 종류로 검색...">
+    <input type="text" id="search-input" placeholder="술 이름, 브랜드, 나라, 종류로 검색...">
     <button class="search-clear" id="search-clear">✕</button>
     <div class="search-results" id="search-results"></div>
   </div>
@@ -315,6 +194,7 @@
 
 <div class="filter-bar">
   <button class="filter-btn active" data-type="all">전체 <span class="count-badge" id="cnt-all">0</span></button>
+  <button class="filter-btn" data-type="브랜드">🏷️ 브랜드 <span class="count-badge" id="cnt-brand">0</span></button>
   <button class="filter-btn" data-type="맥주">🍺 맥주</button>
   <button class="filter-btn" data-type="와인">🍷 와인</button>
   <button class="filter-btn" data-type="위스키">🥃 위스키</button>
@@ -326,118 +206,228 @@
 <div id="map"></div>
 
 <div class="legend">
-  <h4>종류별 색상</h4>
-  <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>맥주</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>와인</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#92400e"></div>위스키</div>
+  <h4>마커 구분</h4>
+  <div class="legend-item"><div class="legend-sq" style="background:#a855f7;border:1px solid #fff"></div>브랜드</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>맥주 원산지</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>와인 원산지</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#92400e"></div>위스키 원산지</div>
   <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>소주·청주</div>
   <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>증류주</div>
   <div class="legend-item"><div class="legend-dot" style="background:#059669"></div>전통주</div>
 </div>
 
 <script>
-const drinks = [
-  // 맥주
+// ── 원산지 데이터 ──────────────────────────────
+const origins = [
   { name:"필스너 우르켈", country:"체코 (플젠)", lat:49.75, lng:13.38, type:"맥주", emoji:"🍺", abv:"4.4%", desc:"세계 최초의 황금빛 라거 맥주. 1842년 탄생.", style:"라거", color:"#f59e0b" },
-  { name:"기네스", country:"아일랜드 (더블린)", lat:53.34, lng:-6.27, type:"맥주", emoji:"🍺", abv:"4.2%", desc:"흑맥주의 대명사. 1759년 아서 기네스가 창업.", style:"스타우트", color:"#f59e0b" },
-  { name:"하이네켄", country:"네덜란드 (암스테르담)", lat:52.37, lng:4.90, type:"맥주", emoji:"🍺", abv:"5%", desc:"세계 최대 수출 맥주 브랜드 중 하나.", style:"라거", color:"#f59e0b" },
+  { name:"기네스 흑맥주", country:"아일랜드 (더블린)", lat:53.34, lng:-6.27, type:"맥주", emoji:"🍺", abv:"4.2%", desc:"흑맥주의 대명사. 1759년 아서 기네스가 창업.", style:"스타우트", color:"#f59e0b" },
   { name:"바이엔슈테판", country:"독일 (뮌헨)", lat:48.4, lng:11.73, type:"맥주", emoji:"🍺", abv:"5.1%", desc:"세계에서 가장 오래된 양조장(1040년). 밀맥주로 유명.", style:"헤페바이젠", color:"#f59e0b" },
-  { name:"버드와이저", country:"미국 (세인트루이스)", lat:38.63, lng:-90.20, type:"맥주", emoji:"🍺", abv:"5%", desc:"미국의 아이콘 맥주. 1876년 창업.", style:"라거", color:"#f59e0b" },
-  { name:"삿포로", country:"일본 (삿포로)", lat:43.06, lng:141.35, type:"맥주", emoji:"🍺", abv:"5%", desc:"일본 최초의 맥주 브랜드 (1876년).", style:"라거", color:"#f59e0b" },
-  { name:"칭따오", country:"중국 (칭다오)", lat:36.07, lng:120.38, type:"맥주", emoji:"🍺", abv:"4.7%", desc:"독일 식민지 시절 설립(1903년). 중국 대표 맥주.", style:"라거", color:"#f59e0b" },
-  { name:"하이트", country:"대한민국 (서울)", lat:37.56, lng:126.97, type:"맥주", emoji:"🍺", abv:"4.5%", desc:"한국 대표 라거 맥주.", style:"라거", color:"#f59e0b" },
-  { name:"코로나", country:"멕시코 (멕시코시티)", lat:19.43, lng:-99.13, type:"맥주", emoji:"🍺", abv:"4.5%", desc:"라임과 함께 마시는 멕시코 대표 맥주.", style:"라거", color:"#f59e0b" },
-
-  // 와인
   { name:"보르도 와인", country:"프랑스 (보르도)", lat:44.84, lng:-0.58, type:"와인", emoji:"🍷", abv:"12~15%", desc:"카베르네 소비뇽 중심. 세계 최고 명성의 와인 산지.", style:"레드 와인", color:"#dc2626" },
   { name:"부르고뉴 와인", country:"프랑스 (부르고뉴)", lat:47.05, lng:4.85, type:"와인", emoji:"🍷", abv:"12~14%", desc:"피노 누아·샤르도네. 단일 포도밭(클리마) 시스템.", style:"레드/화이트", color:"#dc2626" },
   { name:"샴페인", country:"프랑스 (랭스)", lat:49.26, lng:4.03, type:"와인", emoji:"🥂", abv:"12%", desc:"전통 방식 스파클링 와인. 샴페인 지방에서만 생산.", style:"스파클링", color:"#dc2626" },
   { name:"리오하 와인", country:"스페인 (로그로뇨)", lat:42.46, lng:-2.44, type:"와인", emoji:"🍷", abv:"13~15%", desc:"템프라니요 품종. 스페인 최고 와인 산지.", style:"레드 와인", color:"#dc2626" },
   { name:"키안티", country:"이탈리아 (피렌체)", lat:43.77, lng:11.25, type:"와인", emoji:"🍷", abv:"12~13.5%", desc:"산지오베제 품종. 토스카나 대표 와인.", style:"레드 와인", color:"#dc2626" },
   { name:"포트 와인", country:"포르투갈 (포르투)", lat:41.15, lng:-8.61, type:"와인", emoji:"🍷", abv:"19~22%", desc:"주정 강화 와인. 두로 강 상류에서 생산.", style:"강화 와인", color:"#dc2626" },
-  { name:"나파밸리 와인", country:"미국 (캘리포니아)", lat:38.50, lng:-122.27, type:"와인", emoji:"🍷", abv:"13~15%", desc:"1976년 '파리의 심판'에서 프랑스를 제친 미국 와인.", style:"레드 와인", color:"#dc2626" },
+  { name:"나파밸리 와인", country:"미국 (캘리포니아)", lat:38.50, lng:-122.27, type:"와인", emoji:"🍷", abv:"13~15%", desc:"1976년 파리의 심판에서 프랑스를 제친 미국 와인.", style:"레드 와인", color:"#dc2626" },
   { name:"말벡", country:"아르헨티나 (멘도사)", lat:-32.89, lng:-68.82, type:"와인", emoji:"🍷", abv:"13~15%", desc:"프랑스 원산이나 아르헨티나에서 완성된 품종.", style:"레드 와인", color:"#dc2626" },
-  { name:"마오리 소비뇽 블랑", country:"뉴질랜드 (말버러)", lat:-41.51, lng:173.96, type:"와인", emoji:"🍷", abv:"12~13%", desc:"패션후르츠·허브 향의 세계적 소비뇽 블랑.", style:"화이트 와인", color:"#dc2626" },
-
-  // 위스키
+  { name:"소비뇽 블랑", country:"뉴질랜드 (말버러)", lat:-41.51, lng:173.96, type:"와인", emoji:"🍷", abv:"12~13%", desc:"패션후르츠·허브 향의 세계적 소비뇽 블랑.", style:"화이트 와인", color:"#dc2626" },
   { name:"스카치 위스키", country:"스코틀랜드 (에든버러)", lat:55.95, lng:-3.19, type:"위스키", emoji:"🥃", abv:"40~46%", desc:"오크통 숙성 3년 이상. 싱글몰트의 본고장.", style:"싱글몰트", color:"#92400e" },
-  { name:"아이리시 위스키", country:"아일랜드 (코크)", lat:51.90, lng:-8.47, type:"위스키", emoji:"🥃", abv:"40%", desc:"3회 증류로 부드러운 맛. 제임슨이 대표적.", style:"블렌디드", color:"#92400e" },
-  { name:"버번 위스키", country:"미국 (켄터키)", lat:37.84, lng:-84.27, type:"위스키", emoji:"🥃", abv:"40~50%", desc:"옥수수 51% 이상, 새 오크통 숙성. 잭다니엘·메이커스마크.", style:"버번", color:"#92400e" },
-  { name:"재패니즈 위스키", country:"일본 (요이치)", lat:43.19, lng:140.78, type:"위스키", emoji:"🥃", abv:"43%", desc:"스코틀랜드 방식 + 일본 장인정신. 야마자키·히비키.", style:"싱글몰트", color:"#92400e" },
+  { name:"아이리시 위스키", country:"아일랜드 (코크)", lat:51.90, lng:-8.47, type:"위스키", emoji:"🥃", abv:"40%", desc:"3회 증류로 부드러운 맛.", style:"블렌디드", color:"#92400e" },
+  { name:"버번 위스키", country:"미국 (켄터키)", lat:37.84, lng:-84.27, type:"위스키", emoji:"🥃", abv:"40~50%", desc:"옥수수 51% 이상, 새 오크통 숙성.", style:"버번", color:"#92400e" },
   { name:"캐나디안 위스키", country:"캐나다 (온타리오)", lat:43.65, lng:-79.38, type:"위스키", emoji:"🥃", abv:"40%", desc:"라이 위스키 기반. 가볍고 부드러운 스타일.", style:"블렌디드", color:"#92400e" },
-
-  // 소주·청주
-  { name:"참이슬 (소주)", country:"대한민국 (서울)", lat:37.51, lng:126.88, type:"소주·청주", emoji:"🍶", abv:"16.9%", desc:"한국 최대 판매량 소주. 희석식 소주의 대표.", style:"희석식 소주", color:"#3b82f6" },
+  { name:"참이슬 (소주)", country:"대한민국 (서울)", lat:37.51, lng:126.88, type:"소주·청주", emoji:"🍶", abv:"16.9%", desc:"한국 최대 판매량 소주.", style:"희석식 소주", color:"#3b82f6" },
   { name:"안동소주", country:"대한민국 (안동)", lat:36.57, lng:128.73, type:"소주·청주", emoji:"🍶", abv:"45%", desc:"증류식 전통 소주. 고려시대부터 이어온 명주.", style:"증류식 소주", color:"#3b82f6" },
-  { name:"사케 (청주)", country:"일본 (니가타)", lat:37.90, lng:139.02, type:"소주·청주", emoji:"🍶", abv:"15~16%", desc:"쌀과 누룩으로 빚은 일본 전통주. 니가타산이 최고급.", style:"순미다이긴죠", color:"#3b82f6" },
-  { name:"마오타이 (茅台)", country:"중국 (구이저우)", lat:27.86, lng:106.37, type:"소주·청주", emoji:"🍶", abv:"53%", desc:"중국 국주(國酒). 수수로 만든 장향형 백주.", style:"바이주(백주)", color:"#3b82f6" },
-
-  // 증류주
+  { name:"사케 (청주)", country:"일본 (니가타)", lat:37.90, lng:139.02, type:"소주·청주", emoji:"🍶", abv:"15~16%", desc:"쌀과 누룩으로 빚은 일본 전통주.", style:"순미다이긴죠", color:"#3b82f6" },
+  { name:"마오타이 (茅台)", country:"중국 (구이저우)", lat:27.86, lng:106.37, type:"소주·청주", emoji:"🍶", abv:"53%", desc:"중국 국주(國酒). 수수로 만든 장향형 백주.", style:"바이주", color:"#3b82f6" },
   { name:"보드카", country:"러시아 (모스크바)", lat:55.75, lng:37.62, type:"증류주", emoji:"🥂", abv:"40%", desc:"감자·밀·호밀 원료. 무색무취의 증류주.", style:"보드카", color:"#7c3aed" },
   { name:"진", country:"영국 (런던)", lat:51.51, lng:-0.13, type:"증류주", emoji:"🥂", abv:"40~47%", desc:"주니퍼베리 향의 증류주. 칵테일 기본 베이스.", style:"런던 드라이 진", color:"#7c3aed" },
   { name:"럼", country:"쿠바 (하바나)", lat:23.13, lng:-82.38, type:"증류주", emoji:"🥂", abv:"40~75%", desc:"사탕수수 당밀로 만든 카리브해 증류주.", style:"다크럼", color:"#7c3aed" },
   { name:"테킬라", country:"멕시코 (과달라하라)", lat:20.66, lng:-103.35, type:"증류주", emoji:"🥂", abv:"38~55%", desc:"블루 아가베 식물로 만든 멕시코 대표 증류주.", style:"블랑코", color:"#7c3aed" },
-  { name:"압생트", country:"스위스/프랑스 (퐁타를리에)", lat:46.91, lng:6.35, type:"증류주", emoji:"🥂", abv:"45~74%", desc:"쑥·아니스 향. '녹색 요정'이라 불리는 고도주.", style:"압생트", color:"#7c3aed" },
-  { name:"아쿠아비트", country:"노르웨이 (오슬로)", lat:59.91, lng:10.75, type:"증류주", emoji:"🥂", abv:"37.5~50%", desc:"캐러웨이 씨앗 향의 스칸디나비아 전통 증류주.", style:"아쿠아비트", color:"#7c3aed" },
   { name:"코냑", country:"프랑스 (코냑)", lat:45.70, lng:-0.33, type:"증류주", emoji:"🥂", abv:"40%", desc:"화이트 와인을 증류·숙성한 브랜디의 최고봉.", style:"VSOP/XO", color:"#7c3aed" },
-  { name:"아르마냑", country:"프랑스 (오슈)", lat:43.65, lng:0.59, type:"증류주", emoji:"🥂", abv:"40~48%", desc:"코냑과 쌍벽. 단식 증류로 개성 강한 풍미.", style:"브랜디", color:"#7c3aed" },
+  { name:"압생트", country:"스위스 (퐁타를리에)", lat:46.91, lng:6.35, type:"증류주", emoji:"🥂", abv:"45~74%", desc:"쑥·아니스 향. 녹색 요정이라 불리는 고도주.", style:"압생트", color:"#7c3aed" },
+  { name:"아쿠아비트", country:"노르웨이 (오슬로)", lat:59.91, lng:10.75, type:"증류주", emoji:"🥂", abv:"37.5~50%", desc:"캐러웨이 씨앗 향의 스칸디나비아 전통 증류주.", style:"아쿠아비트", color:"#7c3aed" },
   { name:"그라파", country:"이탈리아 (바사노)", lat:45.77, lng:11.73, type:"증류주", emoji:"🥂", abv:"35~60%", desc:"포도 압착 찌꺼기로 만든 이탈리아 전통 증류주.", style:"포마스 브랜디", color:"#7c3aed" },
-  { name:"소주 (고량주)", country:"대만 (진먼)", lat:24.43, lng:118.32, type:"증류주", emoji:"🥂", abv:"58%", desc:"수수(고량)로 만든 진먼 가오량. 대만 명주.", style:"바이주", color:"#7c3aed" },
   { name:"피스코", country:"페루 (이카)", lat:-14.06, lng:-75.73, type:"증류주", emoji:"🥂", abv:"38~48%", desc:"포도로 만든 남미 증류주. 피스코 사워 칵테일 원료.", style:"포도 증류주", color:"#7c3aed" },
-  { name:"우조", country:"그리스 (아테네)", lat:37.98, lng:23.73, type:"증류주", emoji:"🥂", abv:"37.5~50%", desc:"아니스 향의 그리스 전통주. 물 타면 흰색으로 변함.", style:"아니스 증류주", color:"#7c3aed" },
-
-  // 전통주
+  { name:"우조", country:"그리스 (아테네)", lat:37.98, lng:23.73, type:"증류주", emoji:"🥂", abv:"37.5~50%", desc:"아니스 향의 그리스 전통주. 물 타면 흰색.", style:"아니스 증류주", color:"#7c3aed" },
   { name:"막걸리", country:"대한민국 (전국)", lat:36.50, lng:127.50, type:"전통주", emoji:"🏺", abv:"6~8%", desc:"쌀·누룩으로 빚은 한국 전통 탁주. 유산균 풍부.", style:"탁주", color:"#059669" },
   { name:"황주 (소흥주)", country:"중국 (사오싱)", lat:30.00, lng:120.58, type:"전통주", emoji:"🏺", abv:"14~20%", desc:"쌀로 빚은 황색 발효주. 중국 최고(最古) 술.", style:"황주", color:"#059669" },
-  { name:"투지우", country:"태국 (치앙마이)", lat:18.79, lng:98.98, type:"전통주", emoji:"🏺", abv:"15~25%", desc:"찹쌀로 만든 태국 북부 전통 쌀술.", style:"쌀 발효주", color:"#059669" },
   { name:"치차", country:"페루 (쿠스코)", lat:-13.53, lng:-71.97, type:"전통주", emoji:"🏺", abv:"1~8%", desc:"옥수수로 만든 잉카 전통 발효주.", style:"옥수수 발효주", color:"#059669" },
-  { name:"테지", country:"에티오피아 (아디스아바바)", lat:9.03, lng:38.74, type:"전통주", emoji:"🏺", abv:"7~11%", desc:"벌꿀과 게쇼 허브로 만든 에티오피아 전통 꿀술.", style:"꿀 발효주", color:"#059669" },
-  { name:"미드 (벌꿀주)", country:"영국/북유럽 (요크)", lat:53.96, lng:-1.09, type:"전통주", emoji:"🏺", abv:"8~20%", desc:"세계 최초의 술 중 하나. 벌꿀을 발효시킨 음료.", style:"허니 와인", color:"#059669" },
-  { name:"퀴미즈", country:"카자흐스탄 (알마티)", lat:43.24, lng:76.94, type:"전통주", emoji:"🏺", abv:"1~3%", desc:"말 젖을 발효시킨 중앙아시아 유목민 전통주.", style:"젖 발효주", color:"#059669" },
+  { name:"테지", country:"에티오피아 (아디스아바바)", lat:9.03, lng:38.74, type:"전통주", emoji:"🏺", abv:"7~11%", desc:"벌꿀과 게쇼 허브로 만든 전통 꿀술.", style:"꿀 발효주", color:"#059669" },
+  { name:"미드 (벌꿀주)", country:"영국/북유럽 (요크)", lat:53.96, lng:-1.09, type:"전통주", emoji:"🏺", abv:"8~20%", desc:"세계 최초의 술 중 하나. 벌꿀 발효 음료.", style:"허니 와인", color:"#059669" },
+  { name:"퀴미즈", country:"카자흐스탄 (알마티)", lat:43.24, lng:76.94, type:"전통주", emoji:"🏺", abv:"1~3%", desc:"말 젖을 발효시킨 유목민 전통주.", style:"젖 발효주", color:"#059669" },
   { name:"팜와인", country:"나이지리아 (라고스)", lat:6.52, lng:3.38, type:"전통주", emoji:"🏺", abv:"3~4%", desc:"야자수 수액을 발효시킨 서아프리카 전통주.", style:"야자 발효주", color:"#059669" },
 ];
 
-// 지도 초기화
-const map = L.map('map', { center: [25, 15], zoom: 2, minZoom: 1 });
+// ── 브랜드 데이터 ──────────────────────────────
+const brands = [
+  // 맥주
+  { name:"하이네켄", country:"네덜란드 (암스테르담)", lat:52.37, lng:4.90, category:"맥주", emoji:"🍺",
+    founded:"1873년", founder:"헤라르트 아드리안 하이네켄", parent:"Heineken N.V.", flagship:"Heineken Lager",
+    abv:"5%", desc:"세계 최대 수출 맥주 브랜드. 초록 병과 붉은 별 로고가 상징. 190개국 이상 판매.", color:"#a855f7" },
+  { name:"기네스", country:"아일랜드 (더블린)", lat:53.345, lng:-6.28, category:"맥주", emoji:"🍺",
+    founded:"1759년", founder:"아서 기네스", parent:"Diageo", flagship:"Guinness Draught",
+    abv:"4.2%", desc:"흑맥주(스타우트)의 대명사. 아일랜드 세인트 제임스 게이트 양조장에서 생산. 크리미한 거품이 특징.", color:"#a855f7" },
+  { name:"버드와이저", country:"미국 (세인트루이스)", lat:38.635, lng:-90.19, category:"맥주", emoji:"🍺",
+    founded:"1876년", founder:"아돌푸스 부시", parent:"AB InBev", flagship:"Budweiser",
+    abv:"5%", desc:"미국의 국민 맥주. 너도밤나무 칩 발효가 특징. 세계 판매량 상위권.", color:"#a855f7" },
+  { name:"아사히", country:"일본 (도쿄)", lat:35.69, lng:139.70, category:"맥주", emoji:"🍺",
+    founded:"1889년", founder:"오사카 맥주회사", parent:"Asahi Group Holdings", flagship:"Asahi Super Dry",
+    abv:"5%", desc:"드라이 맥주 장르를 창시. 깔끔하고 청량한 맛. 일본 맥주 시장 점유율 1위.", color:"#a855f7" },
+  { name:"삿포로", country:"일본 (삿포로)", lat:43.065, lng:141.36, category:"맥주", emoji:"🍺",
+    founded:"1876년", founder:"세이베이 무라카미", parent:"Sapporo Holdings", flagship:"Sapporo Premium",
+    abv:"5%", desc:"일본 최초의 맥주 브랜드. 별 모양 로고로 유명. 홋카이도 맑은 물로 양조.", color:"#a855f7" },
+  { name:"칭따오", country:"중국 (칭다오)", lat:36.075, lng:120.37, category:"맥주", emoji:"🍺",
+    founded:"1903년", founder:"독일·영국 합작", parent:"Tsingtao Brewery Group", flagship:"Tsingtao Beer",
+    abv:"4.7%", desc:"독일 식민지 시절 설립. 중국 최대 수출 맥주. 독일 양조 기술 + 라오산 샘물이 특징.", color:"#a855f7" },
+  { name:"하이트진로", country:"대한민국 (서울)", lat:37.555, lng:126.975, category:"맥주", emoji:"🍺",
+    founded:"1933년", founder:"조선맥주(주)", parent:"하이트진로(주)", flagship:"하이트, 테라, 참이슬",
+    abv:"4.5%", desc:"한국 최대 주류 기업. 맥주(하이트·테라)와 소주(참이슬)를 모두 생산.", color:"#a855f7" },
+  { name:"코로나", country:"멕시코 (멕시코시티)", lat:19.435, lng:-99.14, category:"맥주", emoji:"🍺",
+    founded:"1925년", founder:"Cervecería Modelo", parent:"AB InBev", flagship:"Corona Extra",
+    abv:"4.5%", desc:"라임을 꽂아 마시는 스타일로 유명. 전 세계 수출 맥주 1위권. 투명한 병이 특징.", color:"#a855f7" },
 
+  // 위스키
+  { name:"조니워커", country:"스코틀랜드 (킬마녹)", lat:55.61, lng:-4.50, category:"위스키", emoji:"🥃",
+    founded:"1820년", founder:"존 워커", parent:"Diageo", flagship:"Black Label 12년",
+    abv:"40%", desc:"세계 판매량 1위 스카치 위스키. 레드·블랙·골드·블루 라벨로 등급 구분. 보행하는 신사 로고.", color:"#a855f7" },
+  { name:"잭다니엘스", country:"미국 (린치버그)", lat:35.28, lng:-86.37, category:"위스키", emoji:"🥃",
+    founded:"1866년", founder:"재스퍼 뉴턴 다니엘", parent:"Brown-Forman", flagship:"Old No.7",
+    abv:"40%", desc:"테네시 위스키. 링컨 카운티 프로세스(숯 여과)로 버번과 구분. 세계 최대 단일 브랜드 미국 위스키.", color:"#a855f7" },
+  { name:"발렌타인", country:"스코틀랜드 (덤바튼)", lat:56.00, lng:-4.57, category:"위스키", emoji:"🥃",
+    founded:"1827년", founder:"조지 발렌타인", parent:"Pernod Ricard", flagship:"Finest, 17년, 21년",
+    abv:"40%", desc:"한국에서 가장 많이 팔리는 스카치 위스키. 40개 이상의 싱글몰트를 블렌딩.", color:"#a855f7" },
+  { name:"맥캘란", country:"스코틀랜드 (스페이사이드)", lat:57.48, lng:-3.20, category:"위스키", emoji:"🥃",
+    founded:"1824년", founder:"알렉산더 리드", parent:"Edrington Group", flagship:"12년 셰리 오크",
+    abv:"43%", desc:"싱글몰트의 롤스로이스. 셰리 오크통 숙성이 특징. 경매에서 최고가 기록 보유.", color:"#a855f7" },
+  { name:"글렌피딕", country:"스코틀랜드 (달피들)", lat:57.45, lng:-3.13, category:"위스키", emoji:"🥃",
+    founded:"1887년", founder:"윌리엄 그랜트", parent:"William Grant & Sons", flagship:"12년, 18년",
+    abv:"40%", desc:"세계 판매량 1위 싱글몰트 위스키. 수사슴 로고. 가족 경영 독립 증류소.", color:"#a855f7" },
+  { name:"야마자키", country:"일본 (오사카)", lat:34.89, lng:135.68, category:"위스키", emoji:"🥃",
+    founded:"1923년", founder:"토리이 신지로", parent:"Suntory", flagship:"야마자키 12년, 18년",
+    abv:"43%", desc:"일본 최초의 위스키 증류소. 2015년 세계 최고 위스키 선정. 미즈나라 오크통 숙성.", color:"#a855f7" },
+  { name:"히비키", country:"일본 (오사카)", lat:34.70, lng:135.50, category:"위스키", emoji:"🥃",
+    founded:"1989년", founder:"Suntory", parent:"Suntory", flagship:"히비키 재패니즈 하모니",
+    abv:"43%", desc:"24면 유리병이 24절기를 상징. 블렌디드 위스키. 세계 각종 대회 최고상 수상.", color:"#a855f7" },
+  { name:"제임슨", country:"아일랜드 (코크)", lat:51.898, lng:-8.47, category:"위스키", emoji:"🥃",
+    founded:"1780년", founder:"존 제임슨", parent:"Pernod Ricard", flagship:"Jameson Original",
+    abv:"40%", desc:"세계 판매량 1위 아이리시 위스키. 3회 증류로 부드러운 풍미. 연간 8천만 병 이상 판매.", color:"#a855f7" },
+
+  // 와인
+  { name:"샤토 마고", country:"프랑스 (보르도)", lat:45.04, lng:-0.67, category:"와인", emoji:"🍷",
+    founded:"1590년대", founder:"레스토낙 가문", parent:"Mentzelopoulos 가문", flagship:"Chateau Margaux Grand Cru",
+    abv:"13%", desc:"보르도 5대 샤토 중 하나. 섬세함과 우아함의 대명사. 빈티지에 따라 병당 수십만 원~수백만 원.", color:"#a855f7" },
+  { name:"몬테스", country:"칠레 (콜차과)", lat:-34.56, lng:-70.96, category:"와인", emoji:"🍷",
+    founded:"1988년", founder:"아우렐리오 몬테스", parent:"Montes S.A.", flagship:"Montes Alpha, Folly",
+    abv:"14%", desc:"칠레 프리미엄 와인을 세계에 알린 브랜드. 천사 레이블. 한국에서 가장 인기 있는 칠레 와인.", color:"#a855f7" },
+  { name:"옐로우테일", country:"호주 (리버리나)", lat:-34.18, lng:146.06, category:"와인", emoji:"🍷",
+    founded:"2000년", founder:"카셀라 가문", parent:"Casella Family Brands", flagship:"Yellow Tail Shiraz",
+    abv:"13.5%", desc:"캥거루 레이블로 유명. 미국 수입 와인 판매 1위. 부드럽고 접근하기 쉬운 맛.", color:"#a855f7" },
+  { name:"콘차이토로", country:"칠레 (마이포 밸리)", lat:-33.64, lng:-70.64, category:"와인", emoji:"🍷",
+    founded:"1883년", founder:"돈 멜초르 데 콘차이토로", parent:"Concha y Toro", flagship:"Casillero del Diablo",
+    abv:"13.5%", desc:"남미 최대 와인 생산 기업. 악마의 저장고 레이블. 세계 100개국 이상 수출.", color:"#a855f7" },
+
+  // 소주·증류주
+  { name:"처음처럼", country:"대한민국 (강릉)", lat:37.75, lng:128.88, category:"소주", emoji:"🍶",
+    founded:"2006년", founder:"두산주류BG", parent:"롯데칠성음료", flagship:"처음처럼 순하리",
+    abv:"16.5%", desc:"알칼리 환원수로 만든 소주. 부드럽고 깔끔한 맛. 과일 소주 순하리 시리즈로도 유명.", color:"#a855f7" },
+  { name:"앱솔루트", country:"스웨덴 (오후스)", lat:55.92, lng:14.14, category:"보드카", emoji:"🥂",
+    founded:"1879년", founder:"라르스 올손 스미스", parent:"Pernod Ricard", flagship:"Absolut Vodka",
+    abv:"40%", desc:"세계 3위 보드카 브랜드. 밀 원료. 병 모양이 스웨덴 약병에서 유래. 다양한 플레이버 제품.", color:"#a855f7" },
+  { name:"그레이구스", country:"프랑스 (코냑)", lat:45.70, lng:-0.34, category:"보드카", emoji:"🥂",
+    founded:"1997년", founder:"시드니 프랭크", parent:"Bacardi", flagship:"Grey Goose Original",
+    abv:"40%", desc:"프랑스산 밀·샘물로 만든 프리미엄 보드카. 코냑 지역 증류. 슈퍼 프리미엄 보드카의 선구자.", color:"#a855f7" },
+  { name:"바카디", country:"푸에르토리코 (카타뇨)", lat:18.44, lng:-66.12, category:"럼", emoji:"🥂",
+    founded:"1862년", founder:"파쿤도 바카르디 마소", parent:"Bacardi Ltd.", flagship:"Bacardi Superior",
+    abv:"40%", desc:"세계 판매량 1위 럼 브랜드. 박쥐 로고. 쿠바에서 창업 후 추방. 모히토·다이키리 칵테일의 필수 재료.", color:"#a855f7" },
+  { name:"패트론", country:"멕시코 (할리스코)", lat:20.68, lng:-103.36, category:"테킬라", emoji:"🥂",
+    founded:"1989년", founder:"존 폴 드조리아", parent:"Bacardi", flagship:"Patron Silver",
+    abv:"40%", desc:"프리미엄 테킬라의 대명사. 100% 블루 아가베. 수제 방식 소량 생산. 육각형 유리병.", color:"#a855f7" },
+  { name:"호세쿠엘보", country:"멕시코 (과달라하라)", lat:20.665, lng:-103.34, category:"테킬라", emoji:"🥂",
+    founded:"1795년", founder:"호세 안토니오 데 쿠엘보", parent:"Beckmann Family", flagship:"Jose Cuervo Especial",
+    abv:"38%", desc:"세계 판매량 1위 테킬라. 가장 오래된 테킬라 브랜드. 전 세계 테킬라 시장의 약 35% 점유.", color:"#a855f7" },
+  { name:"헤네시", country:"프랑스 (코냑)", lat:45.698, lng:-0.332, category:"코냑", emoji:"🥂",
+    founded:"1765년", founder:"리처드 헤네시", parent:"LVMH(모에헤네시 루이비통)", flagship:"VS, VSOP, XO",
+    abv:"40%", desc:"세계 코냑 판매량 1위(약 50%). 래퍼·힙합 문화에서 상징적 브랜드. 팔과 도끼 가문 문장 로고.", color:"#a855f7" },
+  { name:"레미마르탱", country:"프랑스 (코냑)", lat:45.702, lng:-0.33, category:"코냑", emoji:"🥂",
+    founded:"1724년", founder:"레미 마르탱", parent:"Rémy Cointreau", flagship:"VSOP, XO",
+    abv:"40%", desc:"그랑드 샹파뉴·프티 샹파뉴 포도만 사용. 켄타우로스 로고. 고급 코냑 시장 대표 브랜드.", color:"#a855f7" },
+  { name:"스미노프", country:"러시아 (모스크바)", lat:55.752, lng:37.61, category:"보드카", emoji:"🥂",
+    founded:"1864년", founder:"표트르 아르세네비치 스미르노프", parent:"Diageo", flagship:"Smirnoff No.21",
+    abv:"37.5%", desc:"세계 판매량 1위 보드카. 러시아 황실 납품 브랜드. 혁명 후 서방으로 이전. 칵테일 기본 베이스.", color:"#a855f7" },
+];
+
+// 전체 데이터 통합
+const allData = [
+  ...origins.map(d => ({ ...d, isBrand: false })),
+  ...brands.map(d => ({ ...d, type: "브랜드", isBrand: true })),
+];
+
+// ── 지도 초기화 ────────────────────────────────
+const map = L.map('map', { center: [30, 15], zoom: 2, minZoom: 1 });
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
   attribution: '© OpenStreetMap © CARTO',
-  subdomains: 'abcd',
-  maxZoom: 18
+  subdomains: 'abcd', maxZoom: 18
 }).addTo(map);
 
 let markers = [];
 
 function createMarker(d) {
-  const icon = L.divIcon({
-    className: '',
-    html: `<div style="
+  let iconHtml;
+  if (d.isBrand) {
+    iconHtml = `<div style="
       background:${d.color};
-      border:2px solid white;
-      border-radius:50%;
+      border:2px solid #fff;
+      border-radius:5px;
       width:28px;height:28px;
       display:flex;align-items:center;justify-content:center;
       font-size:14px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.6);
+      cursor:pointer;
+    ">${d.emoji}</div>`;
+  } else {
+    iconHtml = `<div style="
+      background:${d.color};
+      border:2px solid #fff;
+      border-radius:50%;
+      width:26px;height:26px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:13px;
       box-shadow:0 2px 8px rgba(0,0,0,0.5);
       cursor:pointer;
-    ">${d.emoji}</div>`,
-    iconSize: [28, 28],
-    iconAnchor: [14, 14]
-  });
+    ">${d.emoji}</div>`;
+  }
 
-  const marker = L.marker([d.lat, d.lng], { icon })
-    .bindPopup(`
+  const icon = L.divIcon({ className: '', html: iconHtml, iconSize: [28, 28], iconAnchor: [14, 14] });
+
+  let popupHtml;
+  if (d.isBrand) {
+    popupHtml = `
       <div class="popup-content">
         <div class="popup-emoji">${d.emoji}</div>
-        <div class="popup-tag">${d.type}</div>
+        <div><span class="popup-tag tag-brand">브랜드 · ${d.category}</span></div>
         <div class="popup-name">${d.name}</div>
-        <div class="popup-origin">📍 ${d.country}</div>
-        <div class="popup-row"><span>종류</span><span>${d.style}</span></div>
+        <div class="popup-sub">📍 ${d.country}</div>
+        <div class="popup-row"><span>창립연도</span><span>${d.founded}</span></div>
+        <div class="popup-row"><span>창업자</span><span>${d.founder}</span></div>
+        <div class="popup-row"><span>모회사</span><span>${d.parent}</span></div>
+        <div class="popup-row"><span>대표 제품</span><span>${d.flagship}</span></div>
         <div class="popup-row"><span>도수</span><span>${d.abv}</span></div>
         <div class="popup-desc">${d.desc}</div>
-      </div>
-    `, { maxWidth: 240 });
+      </div>`;
+  } else {
+    popupHtml = `
+      <div class="popup-content">
+        <div class="popup-emoji">${d.emoji}</div>
+        <div><span class="popup-tag tag-origin">${d.type} 원산지</span></div>
+        <div class="popup-name">${d.name}</div>
+        <div class="popup-sub">📍 ${d.country}</div>
+        <div class="popup-row"><span>스타일</span><span>${d.style}</span></div>
+        <div class="popup-row"><span>도수</span><span>${d.abv}</span></div>
+        <div class="popup-desc">${d.desc}</div>
+      </div>`;
+  }
 
+  const marker = L.marker([d.lat, d.lng], { icon }).bindPopup(popupHtml, { maxWidth: 250 });
   marker._drinkData = d;
   return marker;
 }
@@ -445,8 +435,7 @@ function createMarker(d) {
 function renderMarkers(type) {
   markers.forEach(m => map.removeLayer(m));
   markers = [];
-
-  drinks.forEach(d => {
+  allData.forEach(d => {
     if (type === 'all' || d.type === type) {
       const m = createMarker(d);
       m.addTo(map);
@@ -455,30 +444,31 @@ function renderMarkers(type) {
   });
 }
 
-// 필터 버튼
-document.getElementById('cnt-all').textContent = drinks.length;
+// 카운트 표시
+document.getElementById('cnt-all').textContent = allData.length;
+document.getElementById('cnt-brand').textContent = brands.length;
 renderMarkers('all');
 
+// 필터 버튼
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderMarkers(btn.dataset.type);
-    // 검색 초기화
     document.getElementById('search-input').value = '';
     document.getElementById('search-results').style.display = 'none';
     document.getElementById('search-clear').style.display = 'none';
   });
 });
 
-// 검색 기능
-const searchInput = document.getElementById('search-input');
+// ── 검색 기능 ──────────────────────────────────
+const searchInput   = document.getElementById('search-input');
 const searchResults = document.getElementById('search-results');
-const searchClear = document.getElementById('search-clear');
+const searchClear   = document.getElementById('search-clear');
 
-function highlight(text, query) {
-  if (!query) return text;
-  const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+function hl(text, q) {
+  if (!q) return text;
+  const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
   return text.replace(re, '<mark>$1</mark>');
 }
 
@@ -492,30 +482,28 @@ function flyToMarker(d) {
 searchInput.addEventListener('input', () => {
   const q = searchInput.value.trim();
   searchClear.style.display = q ? 'block' : 'none';
+  if (!q) { searchResults.style.display = 'none'; return; }
 
-  if (!q) {
-    searchResults.style.display = 'none';
-    return;
-  }
-
-  const matched = drinks.filter(d =>
-    d.name.includes(q) || d.country.includes(q) ||
-    d.type.includes(q) || d.style.includes(q) || d.desc.includes(q)
-  );
+  const matched = allData.filter(d => {
+    const fields = [d.name, d.country, d.type,
+      d.style || '', d.desc || '',
+      d.category || '', d.founded || '',
+      d.founder || '', d.flagship || '', d.parent || ''];
+    return fields.some(f => f.includes(q));
+  });
 
   if (matched.length === 0) {
     searchResults.innerHTML = `<div class="no-result">검색 결과가 없습니다</div>`;
   } else {
-    searchResults.innerHTML = matched.map(d => `
-      <div class="search-result-item" data-lat="${d.lat}" data-lng="${d.lng}" data-name="${d.name}">
+    searchResults.innerHTML = matched.slice(0, 12).map((d, i) => `
+      <div class="search-result-item" data-idx="${i}">
         <div class="result-emoji">${d.emoji}</div>
         <div class="result-info">
-          <div class="result-name">${highlight(d.name, q)}</div>
-          <div class="result-meta">📍 ${d.country} · 도수 ${d.abv}</div>
+          <div class="result-name">${hl(d.name, q)}</div>
+          <div class="result-meta">📍 ${d.country}${d.isBrand ? ' · ' + d.category : ' · ' + (d.style||d.type)}</div>
         </div>
-        <div class="result-type-badge">${d.type}</div>
-      </div>
-    `).join('');
+        <div class="result-type-badge">${d.isBrand ? '브랜드' : d.type}</div>
+      </div>`).join('');
 
     searchResults.querySelectorAll('.search-result-item').forEach((el, i) => {
       el.addEventListener('click', () => {
@@ -523,7 +511,7 @@ searchInput.addEventListener('input', () => {
         searchInput.value = d.name;
         searchResults.style.display = 'none';
 
-        // 전체 마커 표시 후 해당 마커로 이동
+        // 전체 표시 후 해당 마커로 이동
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         document.querySelector('[data-type="all"]').classList.add('active');
         renderMarkers('all');
@@ -531,7 +519,6 @@ searchInput.addEventListener('input', () => {
       });
     });
   }
-
   searchResults.style.display = 'block';
 });
 
@@ -542,13 +529,11 @@ searchClear.addEventListener('click', () => {
   searchInput.focus();
 });
 
-// 바깥 클릭 시 결과 닫기
-document.addEventListener('click', (e) => {
+document.addEventListener('click', e => {
   if (!e.target.closest('.search-input-wrap')) {
     searchResults.style.display = 'none';
   }
 });
 </script>
-
 </body>
 </html>
