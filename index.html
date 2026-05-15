@@ -373,7 +373,7 @@
     .recog-result.active { display: block; }
     .recog-result-title { font-size: 11px; color: #888; margin-bottom: 6px; }
     .recog-result-name { font-size: 15px; font-weight: 700; color: #f4a261; margin-bottom: 4px; }
-    .recog-result-sub { font-size: 12px; color: #aaa; margin-bottom: 10px; line-height: 1.5; }
+    .recog-result-sub { font-size: 12px; color: #aaa; margin-bottom: 10px; line-height: 1.5; white-space: pre-wrap; }
     .recog-result-btns { display: flex; gap: 8px; flex-wrap: wrap; }
     .recog-result-btn {
       flex: 1; padding: 7px 10px; border: none; border-radius: 8px;
@@ -886,6 +886,7 @@ const brands = [
     desc:"배우 조지 클루니가 공동 창업. 2017년 Diageo가 10억 달러에 인수. 부드럽고 접근하기 쉬운 테킬라 스타일. 블루 아가베 100%. 셀레브리티 브랜드의 성공 사례.", color:"#a855f7" },
 
   // 위스키 — 카발란 (위키백과 출처)
+  { name:"카발란", country:"대만 (이란현)", lat:24.75, lng:121.75, category:"위스키", emoji:"🥃",
     founded:"2005년", founder:"킹카 그룹 (蔡衍明)", parent:"King Car Group", flagship:"Kavalan Solist Vinho Barrique · Kavalan Classic",
     abv:"46~57.8%",
     awards:"• 2012년 Jim Murray 위스키 바이블 최고상 (Solist Fino Sherry)\n• 2015년 세계 최고 싱글몰트 (Solist Vinho Barrique)\n• 국제 대회 금메달 950개 이상 수상",
@@ -1222,10 +1223,11 @@ camInput.addEventListener('change', async () => {
     scanOverlay.classList.remove('active');
 
     const rawText = result.data.text.trim();
-    // 의미 있는 단어만 추출 (3글자 이상, 숫자/특수문자 제외)
+    // 의미 없는 영어 단어 제거 후 4글자 이상만 추출
+    const stopWords = new Set(['the','and','for','with','from','aged','year','years','old','this','that','our','your']);
     const words = rawText.split(/[\s\n,.|;:()[\]{}]+/)
       .map(w => w.replace(/[^a-zA-Z가-힣]/g, ''))
-      .filter(w => w.length >= 3);
+      .filter(w => w.length >= 4 && !stopWords.has(w.toLowerCase()));
 
     if (words.length === 0) {
       showRecog('텍스트 인식 실패', '라벨이 잘 보이도록 다시 촬영해 보세요.', rawText, null);
@@ -1247,8 +1249,10 @@ camInput.addEventListener('change', async () => {
     }
 
     const labelText = words.slice(0, 6).join(' ');
-    if (bestMatch && bestScore >= 1) {
+    if (bestMatch && bestScore >= 2) {
       showRecog(bestMatch.name, `라벨에서 읽은 텍스트: "${labelText}"`, labelText, bestMatch);
+    } else if (bestMatch && bestScore === 1) {
+      showRecog(bestMatch.name + ' (?)' , `라벨: "${labelText}"\n정확도가 낮습니다. 확인 후 선택하세요.`, labelText, bestMatch);
     } else {
       showRecog('데이터베이스에 없는 술', `라벨: "${labelText}"\n네이버에서 검색해 보세요.`, labelText, null);
     }
@@ -1263,7 +1267,7 @@ function showRecog(name, sub, labelText, matchedData) {
   recogName.textContent = name;
   recogSub.textContent = sub;
 
-  const naverQuery = encodeURIComponent((labelText || name) + ' 술 위스키');
+  const naverQuery = encodeURIComponent((labelText || name) + ' 술');
   recogNaver.href = `https://search.naver.com/search.naver?query=${naverQuery}`;
 
   if (matchedData) {
