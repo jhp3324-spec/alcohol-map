@@ -178,6 +178,7 @@
       border-bottom: 1px solid #2a2a4a;
       flex-shrink: 0;
       position: relative;
+      z-index: 1500;
     }
 
     .search-input-wrap {
@@ -437,7 +438,7 @@ function createMarker(d) {
       </div>
     `, { maxWidth: 240 });
 
-  marker._drinkType = d.type;
+  marker._drinkData = d;
   return marker;
 }
 
@@ -482,14 +483,10 @@ function highlight(text, query) {
 }
 
 function flyToMarker(d) {
-  // 해당 마커 찾아서 팝업 열기
-  markers.forEach(m => {
-    const ll = m.getLatLng();
-    if (Math.abs(ll.lat - d.lat) < 0.01 && Math.abs(ll.lng - d.lng) < 0.01) {
-      map.flyTo([d.lat, d.lng], 5, { duration: 1 });
-      setTimeout(() => m.openPopup(), 1000);
-    }
-  });
+  const target = markers.find(m => m._drinkData && m._drinkData.name === d.name);
+  if (!target) return;
+  map.flyTo([d.lat, d.lng], 5, { duration: 1 });
+  setTimeout(() => target.openPopup(), 1100);
 }
 
 searchInput.addEventListener('input', () => {
