@@ -157,6 +157,24 @@
     .popup-row span:last-child { color: #ddd; text-align: right; }
     .popup-desc { font-size: 12px; color: #bbb; margin-top: 8px; line-height: 1.7; border-top: 1px solid #2a2a3a; padding-top: 8px; }
 
+    .popup-links { display: flex; gap: 6px; margin-top: 10px; }
+    .popup-link-btn {
+      flex: 1;
+      padding: 6px 0;
+      border-radius: 6px;
+      border: none;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+    }
+    .btn-google { background: #4285f4; color: #fff; }
+    .btn-naver  { background: #03c75a; color: #fff; }
+    .btn-google:hover { background: #2563eb; }
+    .btn-naver:hover  { background: #02a44a; }
+
     /* 범례 */
     .legend {
       position: fixed;
@@ -400,6 +418,14 @@ function createMarker(d) {
   const icon = L.divIcon({ className: '', html: iconHtml, iconSize: [28, 28], iconAnchor: [14, 14] });
 
   let popupHtml;
+  const gLink = `https://www.google.com/search?q=${encodeURIComponent(d.name + ' 술 브랜드')}`;
+  const nLink = `https://search.naver.com/search.naver?query=${encodeURIComponent(d.name + ' 술')}`;
+  const searchBtns = `
+    <div class="popup-links">
+      <a class="popup-link-btn btn-google" href="${gLink}" target="_blank">🔍 구글 검색</a>
+      <a class="popup-link-btn btn-naver"  href="${nLink}" target="_blank">🔍 네이버 검색</a>
+    </div>`;
+
   if (d.isBrand) {
     popupHtml = `
       <div class="popup-content">
@@ -413,6 +439,7 @@ function createMarker(d) {
         <div class="popup-row"><span>대표 제품</span><span>${d.flagship}</span></div>
         <div class="popup-row"><span>도수</span><span>${d.abv}</span></div>
         <div class="popup-desc">${d.desc}</div>
+        ${searchBtns}
       </div>`;
   } else {
     popupHtml = `
@@ -424,6 +451,7 @@ function createMarker(d) {
         <div class="popup-row"><span>스타일</span><span>${d.style}</span></div>
         <div class="popup-row"><span>도수</span><span>${d.abv}</span></div>
         <div class="popup-desc">${d.desc}</div>
+        ${searchBtns}
       </div>`;
   }
 
