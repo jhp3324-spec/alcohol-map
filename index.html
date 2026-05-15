@@ -177,6 +177,130 @@
     .btn-naver:hover  { background: #02a44a; }
     .btn-wiki:hover   { background: #444; }
 
+    /* 상세 정보 사이드 패널 */
+    .side-panel {
+      position: fixed;
+      top: 0; right: -380px;
+      width: 360px;
+      height: 100%;
+      background: #12122a;
+      border-left: 1px solid #f4a261;
+      z-index: 2500;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -4px 0 24px rgba(0,0,0,0.6);
+      overflow: hidden;
+    }
+    .side-panel.open { right: 0; }
+
+    .panel-header {
+      padding: 16px 18px 12px;
+      background: #1a1a2e;
+      border-bottom: 1px solid #2a2a4a;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .panel-emoji { font-size: 40px; line-height: 1; }
+    .panel-title-wrap { flex: 1; min-width: 0; }
+    .panel-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-bottom: 4px;
+    }
+    .panel-name { font-size: 20px; font-weight: 700; color: #f4a261; line-height: 1.2; }
+    .panel-country { font-size: 12px; color: #aaa; margin-top: 3px; }
+    .panel-close {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .panel-close:hover { color: #fff; }
+
+    .panel-body { flex: 1; overflow-y: auto; padding: 16px 18px; }
+
+    .panel-section { margin-bottom: 18px; }
+    .panel-section-title {
+      font-size: 11px;
+      color: #f4a261;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #2a2a4a;
+    }
+    .panel-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 5px 0;
+      border-bottom: 1px solid #1e1e38;
+      gap: 12px;
+    }
+    .panel-row:last-child { border-bottom: none; }
+    .panel-row .label { color: #888; flex-shrink: 0; min-width: 70px; }
+    .panel-row .value { color: #ddd; text-align: right; }
+    .panel-desc {
+      font-size: 13px;
+      color: #ccc;
+      line-height: 1.8;
+    }
+    .panel-awards {
+      background: #1e1e38;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #f4a261;
+      line-height: 1.8;
+    }
+    .panel-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .panel-link-btn {
+      flex: 1;
+      min-width: 90px;
+      padding: 8px 0;
+      border-radius: 8px;
+      border: none;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+    }
+    .panel-link-btn.google { background: #4285f4; color: #fff; }
+    .panel-link-btn.naver  { background: #03c75a; color: #fff; }
+    .panel-link-btn.wiki   { background: #555; color: #fff; }
+    .panel-link-btn:hover { opacity: 0.85; }
+
+    /* 팝업은 최소화 */
+    .popup-mini { min-width: 160px; text-align: center; padding: 4px 0; }
+    .popup-mini-name { font-size: 14px; font-weight: 700; color: #f4a261; margin-bottom: 4px; }
+    .popup-mini-sub  { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+    .popup-detail-btn {
+      display: block;
+      width: 100%;
+      padding: 7px 0;
+      background: #f4a261;
+      color: #1a1a2e;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .popup-detail-btn:hover { background: #e8924f; }
+
     /* 범례 */
     .legend {
       position: fixed;
@@ -224,6 +348,20 @@
 </div>
 
 <div id="map"></div>
+
+<!-- 상세 정보 사이드 패널 -->
+<div class="side-panel" id="side-panel">
+  <div class="panel-header">
+    <div class="panel-emoji" id="p-emoji">🥃</div>
+    <div class="panel-title-wrap">
+      <div id="p-tag"></div>
+      <div class="panel-name" id="p-name"></div>
+      <div class="panel-country" id="p-country"></div>
+    </div>
+    <button class="panel-close" onclick="closePanel()">✕</button>
+  </div>
+  <div class="panel-body" id="panel-body"></div>
+</div>
 
 <div class="legend">
   <h4>마커 구분</h4>
@@ -404,6 +542,21 @@ const brands = [
   { name:"스미노프", country:"러시아 (모스크바)", lat:55.752, lng:37.61, category:"보드카", emoji:"🥂",
     founded:"1864년", founder:"표트르 아르세네비치 스미르노프", parent:"Diageo", flagship:"Smirnoff No.21",
     abv:"37.5%", desc:"세계 판매량 1위 보드카. 러시아 황실 납품 브랜드. 혁명 후 서방으로 이전. 칵테일 기본 베이스.", color:"#a855f7" },
+
+  // 위스키 — 카발란 (위키백과 출처)
+  { name:"카발란", country:"대만 (이란현 위안산)", lat:24.75, lng:121.75, category:"위스키", emoji:"🥃",
+    founded:"2005년", founder:"킹카 그룹 (蔡衍明)", parent:"King Car Group", flagship:"Kavalan Solist Vinho Barrique · Kavalan Classic",
+    abv:"46~57.8%",
+    awards:"• 2012년 Jim Murray 위스키 바이블 최고상 (Solist Fino Sherry)\n• 2015년 세계 최고 싱글몰트 (Solist Vinho Barrique)\n• 국제 대회 금메달 950개 이상 수상",
+    desc:"대만 최초·유일의 위스키 증류소(2005년 설립). 이란현 중앙산맥과 태평양 사이에 위치. 스코틀랜드산 포트 스틸 20기 보유, 연간 1천만 병 이상 생산 가능. 아열대 기후로 숙성 속도가 스코틀랜드의 3배 빨라 독특한 풍미 형성. 망고·파인애플·코코넛 등 열대과일 향이 특징. 2016년 2호 증류소, 2024년 3번째 숙성 창고 완공. 총 30만 배럴 이상 보관 중.",
+    wiki:"https://en.wikipedia.org/wiki/Kavalan_Distillery",
+    products:[
+      { name:"Kavalan Classic", abv:"40%", desc:"2008년 최초 출시 대표 제품. 열대과일·크림 향." },
+      { name:"Solist Vinho Barrique", abv:"57.8%", desc:"2015년 세계 최고 싱글몰트 선정." },
+      { name:"Solist Fino Sherry", abv:"57.8%", desc:"2012년 Jim Murray 올해의 위스키." },
+      { name:"King Car Conductor", abv:"46%", desc:"블렌디드 몰트. 부드럽고 접근하기 쉬운 스타일." },
+    ],
+    color:"#a855f7" },
 ];
 
 // 전체 데이터 통합
@@ -421,77 +574,104 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 
 let markers = [];
 
-function createMarker(d) {
-  let iconHtml;
+// ── 사이드 패널 ────────────────────────────────
+function openPanel(d) {
+  document.getElementById('p-emoji').textContent = d.emoji;
+  document.getElementById('p-name').textContent  = d.name;
+  document.getElementById('p-country').textContent = '📍 ' + d.country;
+
+  const tagEl = document.getElementById('p-tag');
   if (d.isBrand) {
-    iconHtml = `<div style="
-      background:${d.color};
-      border:2px solid #fff;
-      border-radius:5px;
-      width:28px;height:28px;
-      display:flex;align-items:center;justify-content:center;
-      font-size:14px;
-      box-shadow:0 2px 8px rgba(0,0,0,0.6);
-      cursor:pointer;
-    ">${d.emoji}</div>`;
+    tagEl.innerHTML = `<span class="panel-tag tag-brand">브랜드 · ${d.category}</span>`;
   } else {
-    iconHtml = `<div style="
-      background:${d.color};
-      border:2px solid #fff;
-      border-radius:50%;
-      width:26px;height:26px;
-      display:flex;align-items:center;justify-content:center;
-      font-size:13px;
-      box-shadow:0 2px 8px rgba(0,0,0,0.5);
-      cursor:pointer;
-    ">${d.emoji}</div>`;
+    tagEl.innerHTML = `<span class="panel-tag tag-origin">${d.type} 원산지</span>`;
   }
 
-  const icon = L.divIcon({ className: '', html: iconHtml, iconSize: [28, 28], iconAnchor: [14, 14] });
-
-  let popupHtml;
-  const gLink = `https://www.google.com/search?q=${encodeURIComponent(d.name + ' 술 브랜드')}`;
+  const gLink = `https://www.google.com/search?q=${encodeURIComponent(d.name + ' 위스키 술')}`;
   const nLink = `https://search.naver.com/search.naver?query=${encodeURIComponent(d.name + ' 술')}`;
   const wikiBtn = d.wiki
-    ? `<a class="popup-link-btn btn-wiki" href="${d.wiki}" target="_blank">📖 위키백과</a>`
-    : '';
-  const searchBtns = `
-    <div class="popup-links" style="flex-wrap:wrap;">
-      <a class="popup-link-btn btn-google" href="${gLink}" target="_blank">🔍 구글</a>
-      <a class="popup-link-btn btn-naver"  href="${nLink}" target="_blank">🔍 네이버</a>
-      ${wikiBtn}
-    </div>`;
+    ? `<a class="panel-link-btn wiki" href="${d.wiki}" target="_blank">📖 위키백과</a>` : '';
+
+  let bodyHtml = '';
 
   if (d.isBrand) {
-    popupHtml = `
-      <div class="popup-content">
-        <div class="popup-emoji">${d.emoji}</div>
-        <div><span class="popup-tag tag-brand">브랜드 · ${d.category}</span></div>
-        <div class="popup-name">${d.name}</div>
-        <div class="popup-sub">📍 ${d.country}</div>
-        <div class="popup-row"><span>창립연도</span><span>${d.founded}</span></div>
-        <div class="popup-row"><span>창업자</span><span>${d.founder}</span></div>
-        <div class="popup-row"><span>모회사</span><span>${d.parent}</span></div>
-        <div class="popup-row"><span>대표 제품</span><span>${d.flagship}</span></div>
-        <div class="popup-row"><span>도수</span><span>${d.abv}</span></div>
-        <div class="popup-desc">${d.desc}</div>
-        ${searchBtns}
+    bodyHtml += `
+      <div class="panel-section">
+        <div class="panel-section-title">브랜드 정보</div>
+        <div class="panel-row"><span class="label">창립연도</span><span class="value">${d.founded}</span></div>
+        <div class="panel-row"><span class="label">창업자</span><span class="value">${d.founder}</span></div>
+        <div class="panel-row"><span class="label">모회사</span><span class="value">${d.parent}</span></div>
+        <div class="panel-row"><span class="label">대표 제품</span><span class="value">${d.flagship}</span></div>
+        <div class="panel-row"><span class="label">도수</span><span class="value">${d.abv}</span></div>
       </div>`;
   } else {
-    popupHtml = `
-      <div class="popup-content">
-        <div class="popup-emoji">${d.emoji}</div>
-        <div><span class="popup-tag tag-origin">${d.type} 원산지</span></div>
-        <div class="popup-name">${d.name}</div>
-        <div class="popup-sub">📍 ${d.country}</div>
-        <div class="popup-row"><span>스타일</span><span>${d.style}</span></div>
-        <div class="popup-row"><span>도수</span><span>${d.abv}</span></div>
-        <div class="popup-desc">${d.desc}</div>
-        ${searchBtns}
+    bodyHtml += `
+      <div class="panel-section">
+        <div class="panel-section-title">원산지 정보</div>
+        <div class="panel-row"><span class="label">스타일</span><span class="value">${d.style||'-'}</span></div>
+        <div class="panel-row"><span class="label">도수</span><span class="value">${d.abv}</span></div>
       </div>`;
   }
 
-  const marker = L.marker([d.lat, d.lng], { icon }).bindPopup(popupHtml, { maxWidth: 250 });
+  bodyHtml += `
+    <div class="panel-section">
+      <div class="panel-section-title">상세 설명</div>
+      <div class="panel-desc">${d.desc}</div>
+    </div>`;
+
+  if (d.awards) {
+    bodyHtml += `
+      <div class="panel-section">
+        <div class="panel-section-title">🏆 수상 이력</div>
+        <div class="panel-awards">${d.awards.replace(/\n/g,'<br>')}</div>
+      </div>`;
+  }
+
+  if (d.products && d.products.length) {
+    bodyHtml += `<div class="panel-section"><div class="panel-section-title">🍶 주요 제품</div>`;
+    d.products.forEach(p => {
+      bodyHtml += `
+        <div style="background:#1e1e38;border-radius:8px;padding:10px 12px;margin-bottom:8px;">
+          <div style="font-size:13px;font-weight:700;color:#f4a261;margin-bottom:3px;">${p.name} <span style="color:#aaa;font-weight:400;font-size:11px;">${p.abv}</span></div>
+          <div style="font-size:12px;color:#bbb;">${p.desc}</div>
+        </div>`;
+    });
+    bodyHtml += `</div>`;
+  }
+
+  bodyHtml += `
+    <div class="panel-section">
+      <div class="panel-section-title">더 알아보기</div>
+      <div class="panel-links">
+        <a class="panel-link-btn google" href="${gLink}" target="_blank">🔍 구글</a>
+        <a class="panel-link-btn naver"  href="${nLink}" target="_blank">🔍 네이버</a>
+        ${wikiBtn}
+      </div>
+    </div>`;
+
+  document.getElementById('panel-body').innerHTML = bodyHtml;
+  document.getElementById('side-panel').classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('side-panel').classList.remove('open');
+}
+
+function createMarker(d) {
+  const br = d.isBrand ? '5px' : '50%';
+  const sz = d.isBrand ? '28px' : '26px';
+  const iconHtml = `<div style="background:${d.color};border:2px solid #fff;border-radius:${br};width:${sz};height:${sz};display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,0.6);cursor:pointer;">${d.emoji}</div>`;
+  const icon = L.divIcon({ className:'', html:iconHtml, iconSize:[28,28], iconAnchor:[14,14] });
+
+  const popupHtml = `
+    <div class="popup-mini">
+      <div style="font-size:28px;margin-bottom:4px;">${d.emoji}</div>
+      <div class="popup-mini-name">${d.name}</div>
+      <div class="popup-mini-sub">📍 ${d.country}</div>
+      <button class="popup-detail-btn" onclick="openPanel(window.__markerData['${d.name.replace(/'/g,"\\'")}'])">상세 정보 보기 →</button>
+    </div>`;
+
+  const marker = L.marker([d.lat, d.lng], { icon }).bindPopup(popupHtml, { maxWidth: 200 });
   marker._drinkData = d;
   return marker;
 }
@@ -507,6 +687,10 @@ function renderMarkers(type) {
     }
   });
 }
+
+// 전역 데이터 맵 (팝업 버튼에서 접근용)
+window.__markerData = {};
+allData.forEach(d => { window.__markerData[d.name] = d; });
 
 // 카운트 표시
 document.getElementById('cnt-all').textContent = allData.length;
@@ -574,12 +758,13 @@ searchInput.addEventListener('input', () => {
         const d = matched[i];
         searchInput.value = d.name;
         searchResults.style.display = 'none';
+        searchClear.style.display = 'none';
 
         // 전체 표시 후 해당 마커로 이동
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         document.querySelector('[data-type="all"]').classList.add('active');
         renderMarkers('all');
-        setTimeout(() => flyToMarker(d), 100);
+        setTimeout(() => { flyToMarker(d); openPanel(d); }, 100);
       });
     });
   }
